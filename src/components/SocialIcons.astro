@@ -1,0 +1,23 @@
+---
+import config from "virtual:starlight/user-config";
+import NpmLink from "./NpmLink.astro";
+
+const links = config.social || [];
+const npmLink = links.find(({ icon }) => icon === "npm");
+---
+
+{npmLink && (
+  <span class="social-wrapper">
+    <NpmLink href={npmLink.href} />
+  </span>
+)}
+
+<style>
+  .social-wrapper :global(a) {
+    color: #555;
+
+    &:hover {
+      color: hsl(var(--brand-hue), 50%, 50%);
+    }
+  }
+</style>

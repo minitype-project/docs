@@ -22,27 +22,28 @@
 }
 
 /* ======
-   Brand colors — Starlight accent overrides
+   CSS variables
    ====== */
 :root {
   --brand-hue: 310;
-  --sl-color-accent-low:     hsl(var(--brand-hue), 60%, 90%);
-  --sl-color-accent:         hsl(var(--brand-hue), 50%, 50%);
-  --sl-color-accent-high:    hsl(var(--brand-hue), 60%, 65%);
-  --sl-font: "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-color-accent-low: hsl(var(--brand-hue), 60%, 90%);
+  --sl-color-accent: hsl(var(--brand-hue), 50%, 50%);
+  --sl-color-accent-high: hsl(var(--brand-hue), 60%, 65%);
+  --sl-font:
+    "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --sl-font-mono: "Noto Sans Mono", ui-monospace, monospace;
 
-  /* Heading sizes (mobile): -1 step from Starlight defaults */
-  --sl-text-h1: 1.8em; /* 1.8125rem / 29px */
-  --sl-text-h2: 1.4em; /* 1.5rem / 24px */
-  --sl-text-h3: 1.2em;  /* 1.25rem / 20px */
+  --sl-text-h1: 1.8em;
+  --sl-text-h2: 1.4em;
+  --sl-text-h3: 1.2em;
 
-  --color-border-light: hsl(0, 0%, 90%);
-  --color-border-dark:  hsl(0, 0%, 80%);
+  --color-gray-lightwhite: hsl(0, 0%, 96%);
+  --color-gray-light: hsl(0, 0%, 90%);
+  --color-gray-dark: hsl(0, 0%, 80%);
 }
 
 /* ======
-   Force light mode — hide theme toggle and its separator
+   Header
    ====== */
 starlight-theme-select {
   display: none;
@@ -50,6 +51,11 @@ starlight-theme-select {
 
 .social-icons::after {
   display: none;
+}
+
+.social-icons a svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ======
@@ -84,11 +90,15 @@ site-search button[data-open-modal] {
 }
 
 .sl-markdown-content blockquote {
-  border-left: 3px solid var(--sl-color-accent);
-  background: color-mix(in srgb, var(--sl-color-accent) 5%, var(--sl-color-bg-sidebar));
-  border-radius: 0 6px 6px 0;
-  padding: 12px 20px;
   margin: 1.5rem 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--sl-color-accent);
+  border-radius: 0 6px 6px 0;
+  background: color-mix(
+    in srgb,
+    var(--sl-color-accent) 5%,
+    var(--sl-color-bg-sidebar)
+  );
 }
 
 .sl-markdown-content blockquote p:last-child {
@@ -101,8 +111,8 @@ site-search button[data-open-modal] {
 
 .sl-markdown-content th,
 .sl-markdown-content td {
-  border-top: 1px solid var(--color-border-light);
-  border-bottom: 1px solid var(--color-border-light);
+  border-top: 1px solid var(--color-gray-light);
+  border-bottom: 1px solid var(--color-gray-light);
   border-left: none;
   border-right: none;
   padding: 0.5em 0.75em;
@@ -110,32 +120,33 @@ site-search button[data-open-modal] {
 
 .sl-markdown-content tr:first-child th,
 .sl-markdown-content tr:first-child td {
-  border-top-color: var(--color-border-dark);
+  border-top-color: var(--color-gray-dark);
 }
 
 .sl-markdown-content tr:last-child th,
 .sl-markdown-content tr:last-child td {
-  border-bottom-color: var(--color-border-dark);
+  border-bottom-color: var(--color-gray-dark);
 }
 
 .sl-markdown-content pre {
-  border: 1px solid var(--color-border-light);
+  padding: 8px;
+  border: none;
   border-radius: 8px;
+  background: var(--color-gray-lightwhite);
 }
 
 .sl-markdown-content :not(pre) > code {
-  background: var(--sl-color-bg-sidebar);
+  padding: 0em 0.35em;
   border-radius: 4px;
-  padding: 0.1em 0.35em;
+  background: var(--color-gray-lightwhite);
 }
-
 
 /* ======
    Content panels
    ====== */
 .content-panel + .content-panel {
-  border-top: none;
   padding-top: 0;
+  border-top: none;
 }
 
 /* ======
@@ -143,12 +154,12 @@ site-search button[data-open-modal] {
    ====== */
 .pagination-links a {
   padding: 8px 12px;
-  border: solid 1px var(--color-border-light);
+  border: solid 1px var(--color-gray-light);
   border-radius: 8px;
   box-shadow: none;
 
   &:hover {
-    border-color: var(--color-border-dark);
+    border-color: var(--color-gray-dark);
   }
 }
 

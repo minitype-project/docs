@@ -1,6 +1,6 @@
-import { defineConfig } from "astro/config";
-import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
+import starlight from "@astrojs/starlight";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [
@@ -29,12 +29,21 @@ export default defineConfig({
             { label: "仕様", slug: "specification" },
             { label: "ボックス・フレックスボックス", slug: "box" },
             { label: "インライン要素", slug: "inline" },
-            { label: "プラグイン", slug: "plugin" },
           ],
         },
         {
           label: "プラグイン",
-          items: [{ label: "Markdown プラグイン", slug: "plugin-markdown" }],
+          items: [
+            { label: "プラグイン", slug: "plugin" },
+            { label: "Markdown プラグイン", slug: "plugin-markdown" },
+          ],
+        },
+        {
+          label: "エコシステム",
+          items: [
+            { label: "create-minitype", slug: "create-minitype" },
+            { label: "vite-plugin", slug: "vite-plugin" },
+          ],
         },
         {
           label: "開発者向け",
@@ -53,6 +62,7 @@ export default defineConfig({
       components: {
         SiteTitle: "./src/components/SiteTitle.astro",
         PageTitle: "./src/components/PageTitle.astro",
+        SocialIcons: "./src/components/SocialIcons.astro",
       },
       customCss: ["./src/styles/custom.css"],
       head: [
@@ -63,6 +73,9 @@ export default defineConfig({
       ],
       expressiveCode: {
         themes: ["github-light"],
+        defaultProps: {
+          frame: "none",
+        },
         styleOverrides: {
           frames: {
             frameBoxShadowCssValue: "none",

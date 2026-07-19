@@ -1,5 +1,5 @@
-import type { APIRoute, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
+import type { APIRoute, GetStaticPaths } from "astro";
 
 const rawFiles = import.meta.glob<string>("/src/content/docs/**/*.md", {
   query: "?raw",

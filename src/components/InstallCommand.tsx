@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MdContentCopy, MdCheck } from "react-icons/md";
+import { MdCheck, MdContentCopy } from "react-icons/md";
 
 const INSTALL_CMD = "npm i @minitype/minitype";
 
@@ -14,21 +14,39 @@ export default function InstallCommand() {
 
   return (
     <div style={{ marginBottom: 32 }}>
-      <div style={{
-        display: "inline-flex",
-        alignItems: "center",
-        color: "#fff",
-        fontSize: "1.4rem",
-        fontFamily: "Noto Sans Mono",
-        background: "#222",
-        borderRadius: 12,
-        padding: "12px 12px 12px 20px",
-      }}>
-        <span style={{ color: "hsl(var(--brand-hue), 50%, 50%)", userSelect: "none", marginRight: 12 }}>$</span>
-        <code style={{ background: "none", border: "none", padding: 0, font: "inherit" }}>
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          color: "#fff",
+          fontSize: "1.4rem",
+          fontFamily: "Noto Sans Mono",
+          background: "#222",
+          borderRadius: 12,
+          padding: "12px 12px 12px 20px",
+        }}
+      >
+        <span
+          style={{
+            color: "hsl(var(--brand-hue), 50%, 50%)",
+            userSelect: "none",
+            marginRight: 12,
+          }}
+        >
+          $
+        </span>
+        <code
+          style={{
+            background: "none",
+            border: "none",
+            padding: 0,
+            font: "inherit",
+          }}
+        >
           {INSTALL_CMD}
         </code>
         <button
+          type="button"
           onClick={handleCopy}
           aria-label="コマンドをコピー"
           style={{
