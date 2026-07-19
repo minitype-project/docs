@@ -1,0 +1,157 @@
+/* GenInterfaceJP */
+@font-face {
+  font-family: "GenInterfaceJP";
+  src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
+  font-weight: 100 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GenInterfaceJP";
+  src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+/* Noto Sans Mono */
+@font-face {
+  font-family: "Noto Sans Mono";
+  src: url("/fonts/NotoSansMono-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ======
+   Brand colors — Starlight accent overrides
+   ====== */
+:root {
+  --brand-hue: 310;
+  --sl-color-accent-low:     hsl(var(--brand-hue), 60%, 90%);
+  --sl-color-accent:         hsl(var(--brand-hue), 50%, 50%);
+  --sl-color-accent-high:    hsl(var(--brand-hue), 60%, 65%);
+  --sl-font: "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-font-mono: "Noto Sans Mono", ui-monospace, monospace;
+
+  /* Heading sizes (mobile): -1 step from Starlight defaults */
+  --sl-text-h1: 1.8em; /* 1.8125rem / 29px */
+  --sl-text-h2: 1.4em; /* 1.5rem / 24px */
+  --sl-text-h3: 1.2em;  /* 1.25rem / 20px */
+
+  --color-border-light: hsl(0, 0%, 90%);
+  --color-border-dark:  hsl(0, 0%, 80%);
+}
+
+/* ======
+   Force light mode — hide theme toggle and its separator
+   ====== */
+starlight-theme-select {
+  display: none;
+}
+
+.social-icons::after {
+  display: none;
+}
+
+/* ======
+   Search
+   ====== */
+site-search button[data-open-modal] {
+  border: none;
+}
+
+/* ======
+   Sidebar
+   ====== */
+.sidebar-content nav li a {
+  padding-block: 12px;
+}
+
+/* ======
+   Doc content typography
+   ====== */
+.sl-markdown-content {
+  line-height: 1.75;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-bottom: none;
+}
+
+.sl-markdown-content h3 {
+  margin-top: 32px;
+}
+
+.sl-markdown-content blockquote {
+  border-left: 3px solid var(--sl-color-accent);
+  background: color-mix(in srgb, var(--sl-color-accent) 5%, var(--sl-color-bg-sidebar));
+  border-radius: 0 6px 6px 0;
+  padding: 12px 20px;
+  margin: 1.5rem 0;
+}
+
+.sl-markdown-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.sl-markdown-content table {
+  border-collapse: collapse;
+}
+
+.sl-markdown-content th,
+.sl-markdown-content td {
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+  border-left: none;
+  border-right: none;
+  padding: 0.5em 0.75em;
+}
+
+.sl-markdown-content tr:first-child th,
+.sl-markdown-content tr:first-child td {
+  border-top-color: var(--color-border-dark);
+}
+
+.sl-markdown-content tr:last-child th,
+.sl-markdown-content tr:last-child td {
+  border-bottom-color: var(--color-border-dark);
+}
+
+.sl-markdown-content pre {
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+}
+
+.sl-markdown-content :not(pre) > code {
+  background: var(--sl-color-bg-sidebar);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+
+/* ======
+   Content panels
+   ====== */
+.content-panel + .content-panel {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* ======
+   Pagination (前へ／次へ)
+   ====== */
+.pagination-links a {
+  padding: 8px 12px;
+  border: solid 1px var(--color-border-light);
+  border-radius: 8px;
+  box-shadow: none;
+
+  &:hover {
+    border-color: var(--color-border-dark);
+  }
+}
+
+.pagination-links .link-title {
+  font-size: 1.2rem;
+}

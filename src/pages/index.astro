@@ -1,0 +1,260 @@
+---
+import InstallCommand from '../components/InstallCommand';
+import SiteHeader from '../components/SiteHeader.astro';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>minitype – TypeScript 製の組版エンジン</title>
+    <meta name="description" content="TypeScript 製のヘッドレス組版エンジン" />
+    <link rel="icon" href="/img/favicon.ico" />
+  </head>
+  <body>
+    <SiteHeader>
+      <nav>
+        <a href="/quick-start/">クイックスタート</a>
+        <a href="/specification/">リファレンス</a>
+        <a href="https://www.npmjs.com/package/@minitype/minitype" target="_blank" rel="noopener">npm</a>
+      </nav>
+    </SiteHeader>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1 class="hero-title">minitype</h1>
+          <p class="hero-subtitle">TypeScript 製のヘッドレス組版エンジン</p>
+          <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
+          <InstallCommand client:load />
+          <div class="hero-buttons">
+            <a href="/quick-start/" class="btn btn-primary">クイックスタート</a>
+            <a href="https://www.npmjs.com/package/@minitype/minitype" class="btn btn-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="features-inner">
+          <div class="feature">
+            <h3>TypeScript ライブラリ</h3>
+            <p>TypeScript の型システムを活かした API 設計により，補完と型チェックを活用しながら文書を記述できます．</p>
+          </div>
+          <div class="feature">
+            <h3>高度な日本語組版</h3>
+            <p>縦組，ルビ，段組，フロート等の高度な日本語組版に必要な機能を備えています．</p>
+          </div>
+          <div class="feature">
+            <h3>マルチプラットフォーム</h3>
+            <p>Node.js，Bun といったサーバサイドの環境に加えて，標準的な Web ブラウザ上でも動作します．</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="examples">
+        <div class="examples-inner">
+          <h2 class="examples-title">組版例</h2>
+          <div class="examples-grid">
+            <div class="example-card">
+              <div class="example-thumb"></div>
+              <p class="example-label">横組・本文</p>
+            </div>
+            <div class="example-card">
+              <div class="example-thumb"></div>
+              <p class="example-label">縦組</p>
+            </div>
+            <div class="example-card">
+              <div class="example-thumb"></div>
+              <p class="example-label">段組</p>
+            </div>
+            <div class="example-card">
+              <div class="example-thumb"></div>
+              <p class="example-label">ルビ・圏点</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: "GenInterfaceJP";
+    src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
+    font-weight: 100 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "GenInterfaceJP";
+    src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
+    font-weight: 700 900;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Noto Sans Mono";
+    src: url("/fonts/NotoSansMono-Variable.ttf") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  
+  :root {
+    --brand-hue: 310;
+  }
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #111;
+    background: #fff;
+  }
+
+  nav {
+    display: flex;
+    gap: 24px;
+  }
+  nav a {
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  nav a:hover { color: hsl(var(--brand-hue), 50%, 50%); }
+
+  /* Hero */
+  .hero {
+    padding: 80px 24px 64px;
+    background: linear-gradient(160deg, #fff 0%, color-mix(in srgb, hsl(var(--brand-hue), 50%, 50%) 6%, #fff) 100%);
+  }
+
+  .hero-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: hsl(var(--brand-hue), 60%, 65%);
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+  }
+
+  .hero-desc {
+    margin-bottom: 40px;
+    color: #666;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .btn:hover {
+    opacity: 0.85;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background: hsl(var(--brand-hue), 50%, 50%);
+  }
+
+  .btn-secondary {
+    color: #333;
+    background: hsl(var(--brand-hue), 50%, 95%);
+  }
+
+  /* Features */
+  .features {
+    padding: 64px 24px;
+  }
+
+  .features-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 32px;
+  }
+
+  .feature h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .feature p {
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* Examples */
+  .examples {
+    padding: 64px 24px 80px;
+    background: #fafafa;
+  }
+
+  .examples-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+
+  .examples-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #1a1a1a;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .example-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .example-thumb {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: color-mix(in srgb, hsl(var(--brand-hue), 30%, 80%) 30%, #e8e8e8);
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, hsl(var(--brand-hue), 20%, 70%) 30%, #ddd);
+  }
+
+  .example-label {
+    font-size: 0.875rem;
+    color: #666;
+    text-align: center;
+  }
+</style>
