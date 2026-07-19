@@ -1,4 +1,4 @@
-node_modules
-.docusaurus
-styled-system
+.astro
 build
+dist
+node_modules
