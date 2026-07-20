@@ -123,7 +123,7 @@ export default function PdfPreviewButton({ docId, title = "" }: Props) {
           gap: 6,
           padding: "4px 16px",
           cursor: status === "loading" ? "wait" : "pointer",
-          borderRadius: 6,
+          borderRadius: 8,
           border: "none",
           background: "var(--sl-color-accent)",
           fontWeight: 600,

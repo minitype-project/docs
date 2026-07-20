@@ -17,8 +17,8 @@ import SiteHeader from "../components/SiteHeader.astro";
     <SiteHeader>
       <nav>
         <div class="nav-inner">
-          <a href="/quick-start/">クイックスタート</a>
-          <a href="/specification/">リファレンス</a>
+          <a href="/introduction/quick-start/">クイックスタート</a>
+          <a href="/references/specification/">リファレンス</a>
         </div>
         <div class="nav-inner">
           <NpmLink href="https://www.npmjs.com/package/@minitype/minitype" />
@@ -34,7 +34,7 @@ import SiteHeader from "../components/SiteHeader.astro";
           <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
           <InstallCommand client:load />
           <div class="hero-buttons">
-            <a href="/quick-start/" class="btn btn-primary">クイックスタート</a>
+            <a href="/introduction/quick-start/" class="btn btn-primary">クイックスタート</a>
             <a href="https://www.npmjs.com/package/@minitype/minitype" class="btn btn-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
           </div>
         </div>
@@ -228,7 +228,9 @@ import SiteHeader from "../components/SiteHeader.astro";
     line-height: 1.7;
   }
 
-  /* Examples */
+  /* ======
+     Examples
+     ====== */
   .examples {
     padding: 48px 24px 80px 24px;
     background: #fafafa;
@@ -259,7 +261,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 
   .example-thumb {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 210 / 297;
     background: color-mix(in srgb, hsl(var(--brand-hue), 30%, 80%) 30%, #e8e8e8);
     border-radius: 6px;
   }

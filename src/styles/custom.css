@@ -3,14 +3,14 @@
   font-family: "GenInterfaceJP";
   src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
   font-weight: 100 600;
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
   font-family: "GenInterfaceJP";
   src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
   font-weight: 700 900;
-  font-display: swap;
+  font-display: optional;
 }
 
 /* Noto Sans Mono */
