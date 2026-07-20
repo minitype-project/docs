@@ -1,6 +1,43 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+
+const __dirname = fileURLToPath(new URL(".", import.meta.url));
+
+const minitypeBrowserPlugin = () => {
+  const distDir = resolve(__dirname, "node_modules/@minitype/minitype/dist");
+  const assets = [
+    { url: "/minitype/index.browser.js", file: "index.browser.js" },
+    { url: "/minitype/pdf.worker.mjs", file: "pdf.worker.mjs" },
+  ];
+
+  return {
+    name: "minitype-browser-assets",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const asset = assets.find((a) => req.url === a.url);
+        if (asset) {
+          res.setHeader("Content-Type", "application/javascript");
+          res.end(readFileSync(resolve(distDir, asset.file)));
+          return;
+        }
+        next();
+      });
+    },
+    generateBundle() {
+      for (const asset of assets) {
+        this.emitFile({
+          type: "asset",
+          fileName: `minitype/${asset.file}`,
+          source: readFileSync(resolve(distDir, asset.file)),
+        });
+      }
+    },
+  };
+};
 
 export default defineConfig({
   vite: {
