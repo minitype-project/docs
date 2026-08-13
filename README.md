@@ -7,6 +7,7 @@ minitype の公式サイト兼ドキュメントです．
 ## 開発
 
 [Astro Starlight](https://starlight.astro.build/) を使用して構築され，Cloudflare Pages にデプロイされます．
+ドキュメントの内容は `./src/content/docs` に配置します．
 
 ```bash
 # 開発サーバを起動
