@@ -220,7 +220,7 @@ export const generatePdf = async (
           font: "GenInterfaceJP-Regular",
           effects: [fill(cmyk(0, 0, 0, 100))],
         },
-        figure: { align: "center", width: 140 },
+        image: { align: "center", width: 140 },
         h1: {
           size: 8,
           lineHeight: 8 * 1.4,
@@ -275,7 +275,7 @@ export const generatePdf = async (
         c: { font: "NOTONOTO35HS-Regular", padding: physical(0) },
       },
       gaps: [
-        ["figure", "caption", 2],
+        ["image", "caption", 2],
         ["h1", "paragraph", 0],
         ["h2", "fallback", 4],
         ["h3", "fallback", 2],

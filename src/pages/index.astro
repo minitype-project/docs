@@ -1,7 +1,7 @@
 ---
 import InstallCommand from "../components/InstallCommand";
-import NpmLink from "../components/NpmLink.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import SocialIcons from "../components/SocialIcons.astro";
 ---
 
 <!doctype html>
@@ -9,8 +9,9 @@ import SiteHeader from "../components/SiteHeader.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>minitype – TypeScript 製の組版エンジン</title>
-    <meta name="description" content="TypeScript 製のヘッドレス組版エンジン" />
+    <title>minitype – TypeScript ライブラリとして動作するヘッドレス組版エンジン</title>
+    <meta name="description" content="高品質で美しい文書を生成するための TypeScript ライブラリ" />
+    <meta name="keywords" content="組版, 組版エンジン, 文書生成, PDF, TypeScript, ライブラリ" />
     <link rel="icon" href="/img/favicon.ico" />
   </head>
   <body>
@@ -21,7 +22,7 @@ import SiteHeader from "../components/SiteHeader.astro";
           <a href="/references/specification/">リファレンス</a>
         </div>
         <div class="nav-inner">
-          <NpmLink href="https://www.npmjs.com/package/@minitype/minitype" />
+          <SocialIcons />
         </div>
       </nav>
     </SiteHeader>
@@ -30,7 +31,7 @@ import SiteHeader from "../components/SiteHeader.astro";
       <section class="hero">
         <div class="hero-inner">
           <h1 class="hero-title">minitype</h1>
-          <p class="hero-subtitle">TypeScript 製のヘッドレス組版エンジン</p>
+          <p class="hero-subtitle">TypeScript ライブラリとして動作するヘッドレス組版エンジン</p>
           <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
           <InstallCommand client:load />
           <div class="hero-buttons">
@@ -59,7 +60,7 @@ import SiteHeader from "../components/SiteHeader.astro";
 
       <section class="examples">
         <div class="examples-inner">
-          <h2 class="examples-title">組版例</h2>
+          <h2 class="examples-title">minitype による組版例</h2>
           <div class="examples-grid">
             <div class="example-card">
               <p class="example-label">横組・本文</p>
@@ -81,6 +82,12 @@ import SiteHeader from "../components/SiteHeader.astro";
         </div>
       </section>
     </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 Yuto Wada．本ソフトウェアは，2025 年度下期 未踏アドバンスト事業の支援を受けて開発されました．</p>
+      </div>
+    </footer>
   </body>
 </html>
 
@@ -120,11 +127,14 @@ import SiteHeader from "../components/SiteHeader.astro";
     line-height: 1.75;
     color: #111;
     background: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   nav {
     flex-grow: 1;
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 
@@ -269,5 +279,17 @@ import SiteHeader from "../components/SiteHeader.astro";
   .example-label {
     color: #666;
     text-align: left;
+  }
+
+  footer {
+    padding: 0 24px 48px 24px;
+    background: #fafafa;
+  }
+
+  .footer-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    color: #888;
+    font-size: 0.875rem;
   }
 </style>

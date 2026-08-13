@@ -1,23 +1,46 @@
 ---
-import config from "virtual:starlight/user-config";
-import NpmLink from "./NpmLink.astro";
-
-const links = config.social || [];
-const npmLink = links.find(({ icon }) => icon === "npm");
 ---
 
-{npmLink && (
-  <span class="social-wrapper">
-    <NpmLink href={npmLink.href} />
-  </span>
-)}
+<a href="https://www.npmjs.com/package/@minitype/minitype" target="_blank" rel="noopener me" class="npm-link">
+  <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true">
+    <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" fill="currentColor"/>
+  </svg>
+  npm
+</a>
+<a href="https://cloud.typeset.jp" target="_blank" rel="noopener" class="cloud-link">minitype-cloud</a>
 
 <style>
-  .social-wrapper :global(a) {
+  .npm-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     color: #555;
+    text-decoration: none;
   }
 
-  .social-wrapper :global(a):hover {
+  .npm-link:hover {
     color: hsl(var(--brand-hue), 50%, 50%);
+  }
+
+  .npm-link svg {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .cloud-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: hsl(var(--brand-hue), 50%, 50%);
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.15s;
+  }
+
+  .cloud-link:hover {
+    color: #fff;
+    opacity: 0.85;
   }
 </style>
