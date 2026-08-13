@@ -19,7 +19,7 @@ export default function InstallCommand() {
           display: "inline-flex",
           alignItems: "center",
           color: "#fff",
-          fontSize: "1.4rem",
+          fontSize: "clamp(1rem, 3.5vw, 1.4rem)",
           fontFamily: "Noto Sans Mono",
           background: "#222",
           borderRadius: 12,

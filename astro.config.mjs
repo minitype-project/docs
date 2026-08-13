@@ -40,6 +40,9 @@ const minitypeBrowserPlugin = () => {
 };
 
 export default defineConfig({
+  server: {
+    host: true,
+  },
   vite: {
     plugins: [minitypeBrowserPlugin()],
   },

@@ -17,11 +17,11 @@ import SocialIcons from "../components/SocialIcons.astro";
   <body>
     <SiteHeader>
       <nav>
-        <div class="nav-inner">
+        <div class="nav-inner nav-links">
           <a href="/introduction/quick-start/">クイックスタート</a>
           <a href="/references/specification/">リファレンス</a>
         </div>
-        <div class="nav-inner">
+        <div class="nav-inner nav-social">
           <SocialIcons />
         </div>
       </nav>
@@ -35,8 +35,8 @@ import SocialIcons from "../components/SocialIcons.astro";
           <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
           <InstallCommand client:load />
           <div class="hero-buttons">
-            <a href="/introduction/quick-start/" class="btn btn-primary">クイックスタート</a>
-            <a href="https://www.npmjs.com/package/@minitype/minitype" class="btn btn-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
+            <a href="/introduction/quick-start/" class="button button-primary">クイックスタート</a>
+            <a href="https://www.npmjs.com/package/@minitype/minitype" class="button button-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
           </div>
         </div>
       </section>
@@ -45,11 +45,11 @@ import SocialIcons from "../components/SocialIcons.astro";
         <div class="features-inner">
           <div class="feature">
             <h2>TypeScript ライブラリ</h2>
-            <p>TypeScript の型システムを活かした API 設計により，補完と型チェックを活用しながら文書を記述できます．</p>
+            <p>組版機能をライブラリとして利用できるため，単体での利用に加えて，アプリケーションに組込んだり，生成 AI から利用したりと様々なワークフローでの文書生成が実現されます．</p>
           </div>
           <div class="feature">
             <h2>高度な日本語組版</h2>
-            <p>縦組，ルビ，段組，フロート等の高度な日本語組版に必要な機能を備えています．</p>
+            <p>禁則処理，縦組，ルビ，ハイフネーション，段組，フロート等の高度な組版やレイアウトに必要な機能を備えています．</p>
           </div>
           <div class="feature">
             <h2>マルチプラットフォーム</h2>
@@ -143,6 +143,10 @@ import SocialIcons from "../components/SocialIcons.astro";
     gap: 24px;
   }
 
+  .nav-social {
+    margin-left: auto;
+  }
+
   nav :global(a) {
     font-weight: 500;
     color: #555;
@@ -153,9 +157,15 @@ import SocialIcons from "../components/SocialIcons.astro";
     color: hsl(var(--brand-hue), 50%, 50%);
   }
 
+  @media (max-width: 639px) {
+    .nav-links {
+      display: none;
+    }
+  }
+
   /* Hero */
   .hero {
-    padding: 64px 24px;
+    padding: 64px 32px;
     background: linear-gradient(160deg, #fff 0%, color-mix(in srgb, hsl(var(--brand-hue), 50%, 50%) 6%, #fff) 100%);
   }
 
@@ -165,7 +175,7 @@ import SocialIcons from "../components/SocialIcons.astro";
   }
 
   .hero-title {
-    font-size: 3.5rem;
+    font-size: clamp(3rem, 8vw, 3.5rem);
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 8px;
@@ -173,7 +183,7 @@ import SocialIcons from "../components/SocialIcons.astro";
   }
 
   .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
     font-weight: 600;
     margin-bottom: 4px;
     color: #1a1a1a;
@@ -190,7 +200,7 @@ import SocialIcons from "../components/SocialIcons.astro";
     flex-wrap: wrap;
   }
 
-  .btn {
+  .button {
     display: inline-block;
     padding: 10px 24px;
     border-radius: 8px;
@@ -200,23 +210,23 @@ import SocialIcons from "../components/SocialIcons.astro";
     transition: opacity 0.15s;
   }
 
-  .btn:hover {
+  .button:hover {
     opacity: 0.85;
   }
 
-  .btn-primary {
+  .button-primary {
     color: #fff;
     background: hsl(var(--brand-hue), 50%, 50%);
   }
 
-  .btn-secondary {
+  .button-secondary {
     color: #333;
     background: hsl(var(--brand-hue), 50%, 95%);
   }
 
   /* Features */
   .features {
-    padding: 48px 24px;
+    padding: 48px 32px;
   }
 
   .features-inner {
@@ -242,7 +252,7 @@ import SocialIcons from "../components/SocialIcons.astro";
      Examples
      ====== */
   .examples {
-    padding: 48px 24px 80px 24px;
+    padding: 48px 32px 80px 32px;
     background: #fafafa;
   }
 
@@ -259,7 +269,12 @@ import SocialIcons from "../components/SocialIcons.astro";
 
   .examples-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    /*
+      広い画面では 220px 以上の列を可能な限り詰め込む．
+      464 px 以下では 最小値が 50%-12px になり 2 列を維持する．
+      W / 2 - 12 px = 220 px より，W = 464 px．
+    */
+    grid-template-columns: repeat(auto-fill, minmax(min(220px, calc(50% - 12px)), 1fr));
     gap: 24px;
   }
 
@@ -282,7 +297,7 @@ import SocialIcons from "../components/SocialIcons.astro";
   }
 
   footer {
-    padding: 0 24px 48px 24px;
+    padding: 0 32px 48px 32px;
     background: #fafafa;
   }
 

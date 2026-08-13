@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { generatePdf, type MtApi } from "../libs/create-document";
+import { generatePdf, type MinitypeApi } from "../libs/create-document";
 
 type Status = "idle" | "loading" | "error";
 
@@ -86,8 +86,9 @@ export default function PdfPreviewButton({ docId, title = "" }: Props) {
     setErrorMsg("");
 
     try {
+      polyfillCryptoRandomUUID();
       const mt = await loadMinitype();
-      const pdfData = await generatePdf(docId, title, mt as MtApi, {
+      const pdfData = await generatePdf(docId, title, mt as MinitypeApi, {
         headerImagePath: "/quick-start/header.jpg",
       });
       const blob = new Blob([pdfData as Uint8Array<ArrayBuffer>], {
@@ -126,7 +127,6 @@ export default function PdfPreviewButton({ docId, title = "" }: Props) {
           borderRadius: 8,
           border: "none",
           background: "var(--sl-color-accent)",
-          fontWeight: 600,
           opacity: status === "loading" ? 0.7 : 1,
           transition: "opacity 0.15s",
         }}
