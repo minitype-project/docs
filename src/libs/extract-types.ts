@@ -6,7 +6,7 @@ export const stripComments = (source: string): string => {
 };
 
 /**
- * TypeScript ソースから指定した型，インタフェース，または定数の定義を抽出する．
+ * TypeScript ソースまたは型定義から，指定した型，インタフェース，および定数の定義を抽出する．
  * コメント内の同名の型宣言を誤検出しないよう，先にコメントを除去してから解析する．
  *
  * @param source - TypeScript ソースコード
@@ -24,9 +24,9 @@ export const extractTypeDefinition = (
   let startIdx = -1;
   for (let i = 0; i < lines.length; i++) {
     if (
-      new RegExp(`^export\\s+(type|interface|const)\\s+${typeName}\\b`).test(
-        lines[i],
-      )
+      new RegExp(
+        `^export\\s+(?:declare\\s+)?(type|interface|const)\\s+${typeName}\\b`,
+      ).test(lines[i])
     ) {
       startIdx = i;
       break;
@@ -37,7 +37,9 @@ export const extractTypeDefinition = (
   }
 
   // type alias と interface で終端条件が異なる
-  const isInterface = /^export\s+interface\s+/.test(lines[startIdx]);
+  const isInterface = /^export\s+(?:declare\s+)?interface\s+/.test(
+    lines[startIdx],
+  );
   const collected: string[] = [];
   let braceDepth = 0;
   let parenDepth = 0;
@@ -80,9 +82,12 @@ export const extractTypeDefinition = (
     }
   }
 
+  const definition = collected.filter((line) => line.trim() !== "").join("\n");
+
+  if (/^export\s+declare\s+/.test(definition)) {
+    return definition.replace(/^export\s+declare\s+/, "export ");
+  }
+
   // ドキュメントへの埋め込み用に export キーワードを除去して返す
-  return collected
-    .filter((line) => line.trim() !== "")
-    .join("\n")
-    .replace(/^export\s+(type|interface|const)\s+/, "$1 ");
+  return definition.replace(/^export\s+(type|interface|const)\s+/, "$1 ");
 };

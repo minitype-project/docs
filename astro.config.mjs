@@ -70,6 +70,7 @@ export default defineConfig({
           label: "はじめに",
           items: [
             { label: "クイックスタート", slug: "introduction/quick-start" },
+            { label: "エコシステム", slug: "introduction/ecosystem" },
           ],
         },
         {
@@ -97,13 +98,6 @@ export default defineConfig({
             { label: "プラグイン", slug: "plugin/plugin" },
             { label: "組込みプラグイン", slug: "plugin/builtin-plugins" },
             { label: "Markdown プラグイン", slug: "plugin/plugin-markdown" },
-          ],
-        },
-        {
-          label: "エコシステム",
-          items: [
-            { label: "create-minitype", slug: "ecosystems/create-minitype" },
-            { label: "vite-plugin", slug: "ecosystems/vite-plugin" },
           ],
         },
       ],
