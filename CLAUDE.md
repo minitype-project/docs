@@ -12,3 +12,4 @@
 ## 文章記述
 
 [README.md](./README.md) に記載の「文書記述」「ドキュメント執筆時の注意」の項目を遵守してください．
+Markdown ファイルの YAML frontmatter に `caution` がある場合，その指示を遵守してください．
