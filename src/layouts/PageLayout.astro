@@ -20,6 +20,9 @@ const { title, description, keywords } = Astro.props;
     <meta name="description" content={description} />
     {keywords && <meta name="keywords" content={keywords} />}
     <link rel="icon" href="/img/favicon.ico" />
+    <link rel="preload" as="font" type="font/ttf" href="/fonts/GenInterfaceJP-Regular.ttf" crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/ttf" href="/fonts/GenInterfaceJP-Bold.ttf" crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/ttf" href="/fonts/NotoSansMono-Variable.ttf" crossorigin="anonymous" />
   </head>
   <body>
     <SiteHeader>
@@ -51,19 +54,19 @@ const { title, description, keywords } = Astro.props;
     font-family: "GenInterfaceJP";
     src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
     font-weight: 100 600;
-    font-display: swap;
+    font-display: optional;
   }
   @font-face {
     font-family: "GenInterfaceJP";
     src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
     font-weight: 700 900;
-    font-display: swap;
+    font-display: optional;
   }
   @font-face {
     font-family: "Noto Sans Mono";
     src: url("/fonts/NotoSansMono-Variable.ttf") format("truetype");
     font-weight: 100 900;
-    font-display: swap;
+    font-display: optional;
   }
 
   :root {

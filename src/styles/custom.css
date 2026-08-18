@@ -67,13 +67,6 @@ site-search button[data-open-modal] {
 }
 
 /* ======
-   Sidebar
-   ====== */
-.sidebar-content nav li a {
-  padding-block: 12px;
-}
-
-/* ======
    Doc content typography
    ====== */
 .sl-markdown-content {
@@ -129,6 +122,10 @@ site-search button[data-open-modal] {
   border-bottom-color: var(--color-gray-dark);
 }
 
+.sl-markdown-content a {
+  text-underline-offset: 4px;
+}
+
 .sl-markdown-content pre {
   padding: 8px;
   border: none;
@@ -166,4 +163,11 @@ site-search button[data-open-modal] {
 
 .pagination-links .link-title {
   font-size: 1.2rem;
+}
+
+/* ======
+   Sidebar
+   ====== */
+.sidebar-content nav li a {
+  padding-block: 12px;
 }

@@ -1,0 +1,46 @@
+---
+import EditLink from "virtual:starlight/components/EditLink";
+import LastUpdated from "virtual:starlight/components/LastUpdated";
+import Pagination from "virtual:starlight/components/Pagination";
+---
+
+<footer class="document-footer sl-flex">
+  <div class="meta sl-flex">
+    <EditLink />
+    <LastUpdated />
+  </div>
+  <Pagination />
+  <p class="copyright">
+    © 2026 Yuto Wada．本ソフトウェアは 2025 年度下期 未踏アドバンスト事業の支援を受けて開発されました．
+  </p>
+</footer>
+
+<style>
+  @layer starlight.core {
+    .document-footer {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .meta {
+      gap: 0.75rem 3rem;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+      font-size: var(--sl-text-sm);
+      color: var(--sl-color-gray-3);
+    }
+
+    .meta > :global(p:only-child) {
+      margin-inline-start: auto;
+    }
+
+    .copyright {
+      margin-top: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-gray-light);
+      color: var(--sl-color-gray-3);
+      font-size: var(--sl-text-xs);
+    }
+  }
+</style>
