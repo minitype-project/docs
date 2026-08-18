@@ -69,14 +69,14 @@ export default defineConfig({
         {
           label: "はじめに",
           items: [
-            { label: "クイックスタート", slug: "introduction/quick-start" },
-            { label: "エコシステム", slug: "introduction/ecosystem" },
+            { label: "クイックスタート", slug: "quick-start" },
+            { label: "エコシステム", slug: "quick-start/ecosystem" },
           ],
         },
         {
           label: "リファレンス",
           items: [
-            { label: "仕様", slug: "references/specification" },
+            { label: "リファレンス", slug: "references" },
             { label: "ブロック要素", slug: "references/blocks" },
             { label: "ボックス，フレックスボックス", slug: "references/box" },
             { label: "スタイル", slug: "references/style" },
@@ -95,9 +95,9 @@ export default defineConfig({
         {
           label: "プラグイン",
           items: [
-            { label: "プラグイン", slug: "plugin/plugin" },
-            { label: "組込みプラグイン", slug: "plugin/builtin-plugins" },
-            { label: "Markdown プラグイン", slug: "plugin/plugin-markdown" },
+            { label: "プラグイン", slug: "plugin" },
+            { label: "組込みプラグイン", slug: "plugin/builtin" },
+            { label: "Markdown プラグイン", slug: "plugin/markdown" },
           ],
         },
       ],

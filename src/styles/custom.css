@@ -49,6 +49,7 @@
 :root {
   --sl-nav-height: 4rem;
   --sl-nav-pad-x: 2rem;
+  --sl-sidebar-pad-x: 2rem;
   --sl-content-pad-x: 2rem;
 }
 

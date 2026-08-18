@@ -35,7 +35,7 @@ caution:
 ヘルパ関数として `text()`，`p()`，`h1()`，`h2()`，`h3()`，`h4()`，および `caption()` が用意されています．
 
 ```ts
-import { caption, h1, h2, h3, h4, p, text } from "minitype";
+import { caption, h1, h2, h3, h4, p, text } from "@minitype/minitype";
 
 text("paragraph", "任意の種類のテキスト");
 p("段落");
@@ -57,7 +57,7 @@ caption("図のキャプション");
 ヘルパ関数として `code()` が用意されています．
 
 ```ts
-import { code } from "minitype";
+import { code } from "@minitype/minitype";
 
 code("const message = 'Hello';", "typescript");
 ```
@@ -78,7 +78,7 @@ code("const message = 'Hello';", "typescript");
 ヘルパ関数として `li1()`，`li2()`，`li3()`，`ol1()`，`ol2()`，および `ol3()` が用意されています．
 
 ```ts
-import { li1, li2, li3, ol1, ol2, ol3 } from "minitype";
+import { li1, li2, li3, ol1, ol2, ol3 } from "@minitype/minitype";
 
 li1("順序なしリストの第 1 階層");
 li2("順序なしリストの第 2 階層");
@@ -98,7 +98,7 @@ ol3("順序付きリストの第 3 階層");
 ヘルパ関数として `footnote()` が用意されています．
 
 ```ts
-import { footnote } from "minitype";
+import { footnote } from "@minitype/minitype";
 
 footnote("note-1", "脚注の内容");
 ```
@@ -112,7 +112,7 @@ PNG，JPG，SVG，または PDF の図版を表します．
 ヘルパ関数として `image()` が用意されています．
 
 ```ts
-import { image, ratio } from "minitype";
+import { image, ratio } from "@minitype/minitype";
 
 image("chart.png", { width: ratio(0.8), align: "center" });
 ```
@@ -126,7 +126,7 @@ image("chart.png", { width: ratio(0.8), align: "center" });
 ヘルパ関数として `rect()` および `ellipse()` が用意されています．
 
 ```ts
-import { ellipse, rect } from "minitype";
+import { ellipse, rect } from "@minitype/minitype";
 
 rect(40, 20);
 ellipse(40, 20);
@@ -141,10 +141,10 @@ ellipse(40, 20);
 <!-- @extract:lib/block.ts#TableCell -->
 
 ヘルパ関数として `table()` および `cell()` が用意されています．
-プラグインとして提供される [easytable](../../plugin/builtin-plugins/#簡易テーブルeasytable) も利用できます．
+プラグインとして提供される [easytable](../../plugin/builtin/#簡易テーブルeasytable) も利用できます．
 
 ```ts
-import { cell, p, table } from "minitype";
+import { cell, p, table } from "@minitype/minitype";
 
 table([
   [cell(p("見出し"), { colspan: 2 })],
@@ -161,7 +161,7 @@ LaTeX 記法による数式を表します．
 ヘルパ関数として `math()` が用意されています．
 
 ```ts
-import { math } from "minitype";
+import { math } from "@minitype/minitype";
 
 math(["E = mc^2"]);
 ```
@@ -179,7 +179,7 @@ math(["E = mc^2"]);
 ヘルパ関数として `newpage()`，`clearpage()`，および `newcolumn()` が用意されています．
 
 ```ts
-import { clearpage, newcolumn, newpage } from "minitype";
+import { clearpage, newcolumn, newpage } from "@minitype/minitype";
 
 newpage();
 clearpage();
@@ -195,7 +195,7 @@ newcolumn();
 ヘルパ関数として `vspace()` が用意されています．
 
 ```ts
-import { vspace } from "minitype";
+import { vspace } from "@minitype/minitype";
 
 vspace(10);
 ```
@@ -211,7 +211,7 @@ vspace(10);
 ヘルパ関数として `box()` および `flexbox()` が用意されています．
 
 ```ts
-import { box, flexbox, p } from "minitype";
+import { box, flexbox, p } from "@minitype/minitype";
 
 const firstBox = box([p("左側")]);
 const secondBox = box([p("右側")]);
@@ -231,7 +231,7 @@ flexbox([firstBox, secondBox]);
 ヘルパ関数として `resetLabel()` が用意されています．
 
 ```ts
-import { resetLabel } from "minitype";
+import { resetLabel } from "@minitype/minitype";
 
 resetLabel(["h1", "image"]);
 ```
@@ -246,7 +246,7 @@ resetLabel(["h1", "image"]);
 ヘルパ関数として `section()` が用意されています．
 
 ```ts
-import { h2, p, section } from "minitype";
+import { h2, p, section } from "@minitype/minitype";
 
 section([h2("小見出し"), p("本文")], {
   paragraph: { size: 11 },
@@ -263,7 +263,7 @@ section([h2("小見出し"), p("本文")], {
 ヘルパ関数として `float()` が用意されています．
 
 ```ts
-import { float, image } from "minitype";
+import { float, image } from "@minitype/minitype";
 
 float("top", [image("chart.png")]);
 ```
@@ -277,7 +277,7 @@ float("top", [image("chart.png")]);
 ヘルパ関数として `move()` が用意されています．
 
 ```ts
-import { move, p } from "minitype";
+import { move, p } from "@minitype/minitype";
 
 move([p("移動する内容")], { inlineOffset: 5, blockOffset: 10 });
 ```
@@ -293,7 +293,7 @@ move([p("移動する内容")], { inlineOffset: 5, blockOffset: 10 });
 ヘルパ関数として `processTemplate()` が用意されています．
 
 ```ts
-import { processTemplate } from "minitype";
+import { processTemplate } from "@minitype/minitype";
 
 const customText = (strings: TemplateStringsArray, ...values: string[]) => {
   return processTemplate(strings, ...values);
@@ -303,7 +303,7 @@ const customText = (strings: TemplateStringsArray, ...values: string[]) => {
 ヘルパ関数として `withTemplate()` が用意されています．
 
 ```ts
-import { text, withTemplate } from "minitype";
+import { text, withTemplate } from "@minitype/minitype";
 
 const paragraph = withTemplate((lines) => {
   return text("paragraph", lines);

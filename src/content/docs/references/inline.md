@@ -197,7 +197,7 @@ p([["CID で指定した文字：", cid(843)]]);
 `ils` タグは `\n` を行区切りとして `InlineOrExtender[][]` を作成します．
 
 ```ts
-import { il, ils, kern } from "minitype";
+import { il, ils, kern } from "@minitype/minitype";
 
 const inline: InlineOrExtender[] = il`「${kern(-0.25)}テキスト${kern(-0.25)}」`;
 
