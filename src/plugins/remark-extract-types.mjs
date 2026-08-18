@@ -24,7 +24,9 @@ const remarkExtractTypes = () => {
 
     visit(tree, "html", (node, index, parent) => {
       const match = node.value.match(/<!--\s*@extract:([^#\s]+)#(\w+)\s*-->/);
-      if (!match || !parent) return;
+      if (!match || !parent) {
+        return;
+      }
 
       const [, filePath, typeName] = match;
       const fullPath = resolve(MINITYPE_SRC, filePath);
@@ -47,14 +49,20 @@ const remarkExtractTypes = () => {
         return;
       }
 
-      replacements.push({ parent, index, code: extracted });
+      // visit 時点で次の兄弟を確認する（逆順処理後は状態が変わっているため）
+      const hasCodeFallback = parent.children[index + 1]?.type === "code";
+      replacements.push({ parent, index, code: extracted, hasCodeFallback });
     });
 
     // visit 中に children を変更すると index がずれるため逆順に処理
-    for (const { parent, index, code } of replacements.reverse()) {
+    for (const {
+      parent,
+      index,
+      code,
+      hasCodeFallback,
+    } of replacements.reverse()) {
       const codeNode = { type: "code", lang: "ts", meta: null, value: code };
-      const next = parent.children[index + 1];
-      if (next?.type === "code") {
+      if (hasCodeFallback) {
         // ディレクティブの直後にコードブロックがある場合はまとめて置換
         parent.children.splice(index, 2, codeNode);
       } else {

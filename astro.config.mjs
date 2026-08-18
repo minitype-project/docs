@@ -80,7 +80,7 @@ export default defineConfig({
             { label: "ボックス・フレックスボックス", slug: "references/box" },
             { label: "スタイル", slug: "references/style" },
             { label: "インライン要素", slug: "references/inline" },
-            { label: "アーキテクチャ", slug: "references/architecture" },
+            { label: "API", slug: "references/api" },
             {
               label: "垂直方向の処理",
               slug: "references/vertical",
