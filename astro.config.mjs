@@ -77,7 +77,7 @@ export default defineConfig({
           items: [
             { label: "仕様", slug: "references/specification" },
             { label: "ブロック要素", slug: "references/blocks" },
-            { label: "ボックス・フレックスボックス", slug: "references/box" },
+            { label: "ボックス，フレックスボックス", slug: "references/box" },
             { label: "スタイル", slug: "references/style" },
             { label: "インライン要素", slug: "references/inline" },
             { label: "API", slug: "references/api" },
