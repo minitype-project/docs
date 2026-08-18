@@ -126,6 +126,11 @@ p([["アインシュタインの式 ", inlineMath("E=mc^2"), " は有名です�
 タブを設定したり，コンテンツを指定幅に収めたり，リーダ（……）を作成したりする場合に使用します．
 
 <!-- @extract:lib/inline.ts#Hbox -->
+<!-- @extract:lib/inline.ts#HboxWidth -->
+<!-- @extract:style/unit.ts#HboxPlus -->
+<!-- @extract:style/unit.ts#HboxMax -->
+<!-- @extract:style/unit.ts#HboxPlusValue -->
+<!-- @extract:style/unit.ts#HboxMaxValue -->
 
 ヘルパ関数として `hbox(width, bodyOrFill, options?)` が用意されています．
 

@@ -67,6 +67,10 @@ code("const message = 'Hello';", "typescript");
 順序なしまたは順序付きリストの項目を表します．
 
 <!-- @extract:lib/block.ts#List -->
+<!-- @extract:lib/block.ts#ListType -->
+<!-- @extract:lib/block.ts#ListLevel -->
+<!-- @extract:lib/block.ts#LIST_TYPES -->
+<!-- @extract:lib/block.ts#LIST_LEVELS -->
 
 `level` には，1 から 3 までの階層を指定できます．
 マーカを省略した場合，文書の設定に従って番号，またはビュレットが付与されます．
@@ -276,4 +280,32 @@ float("top", [image("chart.png")]);
 import { move, p } from "minitype";
 
 move([p("移動する内容")], { inlineOffset: 5, blockOffset: 10 });
+```
+
+## タグ付きテンプレート
+
+テキストおよびリストのヘルパ関数には，文字列，文字列の一次元配列，またはインライン要素の二次元配列を渡せます．
+文字列に改行が含まれる場合，改行ごとに行が分割されます．
+また，テキストおよびリストのヘルパ関数は，タグ付きテンプレートリテラルとしても使用できます．
+
+`processTemplate()` および `withTemplate()` は，タグ付きテンプレートリテラルに対応する独自のヘルパ関数を作成する場合に使用します．
+
+ヘルパ関数として `processTemplate()` が用意されています．
+
+```ts
+import { processTemplate } from "minitype";
+
+const customText = (strings: TemplateStringsArray, ...values: string[]) => {
+  return processTemplate(strings, ...values);
+};
+```
+
+ヘルパ関数として `withTemplate()` が用意されています．
+
+```ts
+import { text, withTemplate } from "minitype";
+
+const paragraph = withTemplate((lines) => {
+  return text("paragraph", lines);
+});
 ```
