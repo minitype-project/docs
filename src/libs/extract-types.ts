@@ -6,7 +6,7 @@ export const stripComments = (source: string): string => {
 };
 
 /**
- * TypeScript ソースから指定した型またはインタフェースの定義を抽出する．
+ * TypeScript ソースから指定した型，インタフェース，または定数の定義を抽出する．
  * コメント内の同名の型宣言を誤検出しないよう，先にコメントを除去してから解析する．
  *
  * @param source - TypeScript ソースコード
@@ -20,11 +20,13 @@ export const extractTypeDefinition = (
   const stripped = stripComments(source);
   const lines = stripped.split("\n");
 
-  // 対象の型宣言が始まる行を探す
+  // 対象の宣言が始まる行を探す
   let startIdx = -1;
   for (let i = 0; i < lines.length; i++) {
     if (
-      new RegExp(`^export\\s+(type|interface)\\s+${typeName}\\b`).test(lines[i])
+      new RegExp(`^export\\s+(type|interface|const)\\s+${typeName}\\b`).test(
+        lines[i],
+      )
     ) {
       startIdx = i;
       break;
@@ -39,6 +41,7 @@ export const extractTypeDefinition = (
   const collected: string[] = [];
   let braceDepth = 0;
   let parenDepth = 0;
+  let bracketDepth = 0;
   // hasOpened: 開き括弧が現れる前に depth === 0 で終端判定するのを防ぐフラグ
   let hasOpened = false;
 
@@ -56,10 +59,15 @@ export const extractTypeDefinition = (
         parenDepth++;
       } else if (ch === ")") {
         parenDepth--;
+      } else if (ch === "[") {
+        bracketDepth++;
+        hasOpened = true;
+      } else if (ch === "]") {
+        bracketDepth--;
       }
     }
 
-    if (braceDepth === 0 && parenDepth === 0) {
+    if (braceDepth === 0 && parenDepth === 0 && bracketDepth === 0) {
       const trimmed = line.trimEnd();
       // type alias: セミコロンで終端
       if (!isInterface && trimmed.endsWith(";")) {
@@ -76,5 +84,5 @@ export const extractTypeDefinition = (
   return collected
     .filter((line) => line.trim() !== "")
     .join("\n")
-    .replace(/^export\s+(type|interface)\s+/, "$1 ");
+    .replace(/^export\s+(type|interface|const)\s+/, "$1 ");
 };
