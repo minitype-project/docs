@@ -6,7 +6,7 @@ caution:
   - ヘルパ関数がある場合，「ヘルパ関数として `foo()` が用意されています」と記載した後，その利用例のコードブロックを示す．
 ---
 
-本文書では，インライン要素の種類および使い方について説明します．
+本文書では，minitype が扱うインライン要素の種類および使い方を説明します．
 
 ## はじめに
 
@@ -204,4 +204,4 @@ const inline: InlineOrExtender[] = il`「${kern(-0.25)}テキスト${kern(-0.25)
 const lines: InlineOrExtender[][] = ils`1行目\n${kern(-0.25)}2行目`;
 ```
 
-インラインエキステンダ（`InlineExtender`）については，[プラグイン](../plugin/plugin#inlineextender)を参照してください．
+InlineExtender については，[プラグイン](../plugin/plugin#inlineextender)を参照してください．
