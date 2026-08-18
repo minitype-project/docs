@@ -141,7 +141,7 @@ ellipse(40, 20);
 <!-- @extract:lib/block.ts#TableCell -->
 
 ヘルパ関数として `table()` および `cell()` が用意されています．
-プラグインとして提供される[簡易テーブル（easytable）](../plugin/builtin-plugins/#簡易テーブルeasytable)も利用できます．
+プラグインとして提供される [easytable](../../plugin/builtin-plugins/#簡易テーブルeasytable) も利用できます．
 
 ```ts
 import { cell, p, table } from "minitype";
