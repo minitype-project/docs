@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import remarkExtractTypes from "./src/plugins/remark-extract-types.mjs";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -43,6 +44,9 @@ export default defineConfig({
   server: {
     host: true,
   },
+  markdown: {
+    remarkPlugins: [remarkExtractTypes],
+  },
   vite: {
     plugins: [minitypeBrowserPlugin()],
   },
@@ -72,7 +76,9 @@ export default defineConfig({
           label: "リファレンス",
           items: [
             { label: "仕様", slug: "references/specification" },
+            { label: "ブロック要素", slug: "references/blocks" },
             { label: "ボックス・フレックスボックス", slug: "references/box" },
+            { label: "スタイル", slug: "references/style" },
             { label: "インライン要素", slug: "references/inline" },
             { label: "アーキテクチャ", slug: "references/architecture" },
             {
@@ -89,6 +95,7 @@ export default defineConfig({
           label: "プラグイン",
           items: [
             { label: "プラグイン", slug: "plugin/plugin" },
+            { label: "組込みプラグイン", slug: "plugin/builtin-plugins" },
             { label: "Markdown プラグイン", slug: "plugin/plugin-markdown" },
           ],
         },
