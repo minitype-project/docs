@@ -1,168 +1,69 @@
 ---
 import InstallCommand from "../components/InstallCommand";
-import SiteHeader from "../components/SiteHeader.astro";
-import SocialIcons from "../components/SocialIcons.astro";
+import PageLayout from "../layouts/PageLayout.astro";
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>minitype – TypeScript ライブラリとして動作するヘッドレス組版エンジン</title>
-    <meta name="description" content="高品質で美しい文書を生成するための TypeScript ライブラリ" />
-    <meta name="keywords" content="組版, 組版エンジン, 文書生成, PDF, TypeScript, ライブラリ" />
-    <link rel="icon" href="/img/favicon.ico" />
-  </head>
-  <body>
-    <SiteHeader>
-      <nav>
-        <div class="nav-inner nav-links">
-          <a href="/introduction/quick-start/">クイックスタート</a>
-          <a href="/references/specification/">リファレンス</a>
-        </div>
-        <div class="nav-inner nav-social">
-          <SocialIcons />
-        </div>
-      </nav>
-    </SiteHeader>
-
-    <main>
-      <section class="hero">
-        <div class="hero-inner">
-          <h1 class="hero-title">minitype</h1>
-          <p class="hero-subtitle">TypeScript ライブラリとして動作するヘッドレス組版エンジン</p>
-          <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
-          <InstallCommand client:load />
-          <div class="hero-buttons">
-            <a href="/introduction/quick-start/" class="button button-primary">クイックスタート</a>
-            <a href="https://www.npmjs.com/package/@minitype/minitype" class="button button-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="features">
-        <div class="features-inner">
-          <div class="feature">
-            <h2>TypeScript ライブラリ</h2>
-            <p>組版機能をライブラリとして利用できるため，単体での利用に加えて，アプリケーションに組込んだり，生成 AI から利用したりと様々なワークフローでの文書生成が実現されます．</p>
-          </div>
-          <div class="feature">
-            <h2>高度な日本語組版</h2>
-            <p>禁則処理，縦組，ルビ，ハイフネーション，段組，フロート等の高度な組版やレイアウトに必要な機能を備えています．</p>
-          </div>
-          <div class="feature">
-            <h2>マルチプラットフォーム</h2>
-            <p>Node.js，Bun といったサーバサイドの環境に加えて，標準的な Web ブラウザ上でも動作します．</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="examples">
-        <div class="examples-inner">
-          <h2 class="examples-title">minitype による組版例</h2>
-          <div class="examples-grid">
-            <div class="example-card">
-              <p class="example-label">横組・本文</p>
-              <div class="example-thumb"></div>
-            </div>
-            <div class="example-card">
-              <p class="example-label">縦組</p>
-              <div class="example-thumb"></div>
-            </div>
-            <div class="example-card">
-              <p class="example-label">段組</p>
-              <div class="example-thumb"></div>
-            </div>
-            <div class="example-card">
-              <p class="example-label">ルビ・圏点</p>
-              <div class="example-thumb"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-inner">
-        <p>© 2026 Yuto Wada．本ソフトウェアは，2025 年度下期 未踏アドバンスト事業の支援を受けて開発されました．</p>
+<PageLayout
+  title="minitype – TypeScript ライブラリとして動作するヘッドレス組版エンジン"
+  description="高品質で美しい文書を生成するための TypeScript ライブラリ"
+  keywords="組版, 組版エンジン, 文書生成, PDF, TypeScript, ライブラリ"
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">minitype</h1>
+      <p class="hero-subtitle">TypeScript ライブラリとして動作するヘッドレス組版エンジン</p>
+      <p class="hero-desc">高品質で美しい文書を生成するための TypeScript ライブラリ</p>
+      <InstallCommand client:load />
+      <div class="hero-buttons">
+        <a href="/introduction/quick-start/" class="button button-primary">クイックスタート</a>
+        <a href="https://www.npmjs.com/package/@minitype/minitype" class="button button-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
       </div>
-    </footer>
-  </body>
-</html>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="features-inner">
+      <div class="feature">
+        <h2>TypeScript ライブラリ</h2>
+        <p>組版機能をライブラリとして利用できるため，単体での利用に加えて，アプリケーションに組込んだり，生成 AI から利用したりと様々なワークフローでの文書生成が実現されます．</p>
+      </div>
+      <div class="feature">
+        <h2>高度な日本語組版</h2>
+        <p>禁則処理，縦組，ルビ，ハイフネーション，段組，フロート等の高度な組版やレイアウトに必要な機能を備えています．</p>
+      </div>
+      <div class="feature">
+        <h2>マルチプラットフォーム</h2>
+        <p>Node.js，Bun といったサーバサイドの環境に加えて，標準的な Web ブラウザ上でも動作します．</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="examples">
+    <div class="examples-inner">
+      <h2 class="examples-title">minitype による組版例</h2>
+      <div class="examples-grid">
+        <div class="example-card">
+          <p class="example-label">横組・本文</p>
+          <div class="example-thumb"></div>
+        </div>
+        <div class="example-card">
+          <p class="example-label">縦組</p>
+          <div class="example-thumb"></div>
+        </div>
+        <div class="example-card">
+          <p class="example-label">段組</p>
+          <div class="example-thumb"></div>
+        </div>
+        <div class="example-card">
+          <p class="example-label">ルビ・圏点</p>
+          <div class="example-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
 
 <style>
-  @font-face {
-    font-family: "GenInterfaceJP";
-    src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
-    font-weight: 100 600;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: "GenInterfaceJP";
-    src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
-    font-weight: 700 900;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Noto Sans Mono";
-    src: url("/fonts/NotoSansMono-Variable.ttf") format("truetype");
-    font-weight: 100 900;
-    font-display: swap;
-  }
-  
-  :root {
-    --brand-hue: 310;
-  }
-
-  *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    font-size: 16px;
-    line-height: 1.75;
-    color: #111;
-    background: #fff;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  nav {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-inner {
-    display: flex;
-    gap: 20px;
-  }
-
-  .nav-social {
-    margin-left: auto;
-  }
-
-  nav :global(a) {
-    font-weight: 500;
-    color: #555;
-    text-decoration: none;
-  }
-
-  nav :global(a:hover) {
-    color: hsl(var(--brand-hue), 50%, 50%);
-  }
-
-  @media (max-width: 639px) {
-    .nav-links {
-      display: none;
-    }
-  }
-
   /* Hero */
   .hero {
     padding: 64px 32px;
@@ -248,9 +149,7 @@ import SocialIcons from "../components/SocialIcons.astro";
     line-height: 1.7;
   }
 
-  /* ======
-     Examples
-     ====== */
+  /* Examples */
   .examples {
     padding: 48px 32px 80px 32px;
     background: #fafafa;
@@ -294,17 +193,5 @@ import SocialIcons from "../components/SocialIcons.astro";
   .example-label {
     color: #666;
     text-align: left;
-  }
-
-  footer {
-    padding: 0 32px 48px 32px;
-    background: #fafafa;
-  }
-
-  .footer-inner {
-    max-width: 1050px;
-    margin: 0 auto;
-    color: #888;
-    font-size: 0.875rem;
   }
 </style>

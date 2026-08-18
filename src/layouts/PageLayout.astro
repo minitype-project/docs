@@ -1,0 +1,133 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+}
+
+const { title, description, keywords } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    <link rel="icon" href="/img/favicon.ico" />
+  </head>
+  <body>
+    <SiteHeader>
+      <nav>
+        <div class="nav-inner nav-links">
+          <a href="/introduction/quick-start/">クイックスタート</a>
+          <a href="/references/specification/">リファレンス</a>
+        </div>
+        <div class="nav-inner nav-social">
+          <SocialIcons />
+        </div>
+      </nav>
+    </SiteHeader>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>© 2026 Yuto Wada．本ソフトウェアは 2025 年度下期 未踏アドバンスト事業の支援を受けて開発されました．</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: "GenInterfaceJP";
+    src: url("/fonts/GenInterfaceJP-Regular.ttf") format("truetype");
+    font-weight: 100 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "GenInterfaceJP";
+    src: url("/fonts/GenInterfaceJP-Bold.ttf") format("truetype");
+    font-weight: 700 900;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Noto Sans Mono";
+    src: url("/fonts/NotoSansMono-Variable.ttf") format("truetype");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  :root {
+    --brand-hue: 310;
+  }
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "GenInterfaceJP", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #111;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  nav {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-inner {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-social {
+    margin-left: auto;
+  }
+
+  nav :global(a) {
+    font-weight: 500;
+    color: #555;
+    text-decoration: none;
+  }
+
+  nav :global(a:hover) {
+    color: hsl(var(--brand-hue), 50%, 50%);
+  }
+
+  @media (max-width: 639px) {
+    .nav-links {
+      display: none;
+    }
+  }
+
+  footer {
+    padding: 0 32px 48px;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+  }
+
+  .footer-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding-top: 32px;
+    color: #888;
+    font-size: 0.875rem;
+  }
+</style>
