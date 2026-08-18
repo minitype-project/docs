@@ -74,6 +74,15 @@ export default defineConfig({
             { label: "仕様", slug: "references/specification" },
             { label: "ボックス・フレックスボックス", slug: "references/box" },
             { label: "インライン要素", slug: "references/inline" },
+            { label: "アーキテクチャ", slug: "references/architecture" },
+            {
+              label: "垂直方向の処理",
+              slug: "references/vertical",
+            },
+            {
+              label: "組版要件への対応状況",
+              slug: "references/typesetting-requirements",
+            },
           ],
         },
         {
@@ -88,19 +97,6 @@ export default defineConfig({
           items: [
             { label: "create-minitype", slug: "ecosystems/create-minitype" },
             { label: "vite-plugin", slug: "ecosystems/vite-plugin" },
-          ],
-        },
-        {
-          label: "開発者向け",
-          collapsed: true,
-          items: [
-            { label: "アーキテクチャ", slug: "development/architecture" },
-            {
-              label: "垂直方向の処理",
-              slug: "development/architecture-vertical",
-            },
-            { label: "組版要件", slug: "development/requirements" },
-            { label: "設計方針", slug: "development/discussion" },
           ],
         },
       ],

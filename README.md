@@ -26,3 +26,10 @@ yarn run check
 npx wrangler pages secret put BASIC_AUTH_USER
 npx wrangler pages secret put BASIC_AUTH_PASSWORD
 ```
+
+## 文章記述
+
+- ドキュメントの句読点はカンマ（，），ピリオド（．）を使用してください．
+- ドキュメントには敬体（〜です，〜ます）を使用してください．
+- ドキュメントの先頭では，「本文書では〜」と端的に文書の役割を述べてください．
+- ページやドキュメント自体を指す場合，「本文書」という表現を使用してください．
