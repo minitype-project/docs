@@ -3,7 +3,10 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { APIRoute, GetStaticPaths } from "astro";
-import { extractTypeDefinition } from "../../libs/extract-types";
+import {
+  extractTypeDefinition,
+  formatWithBiome,
+} from "../../libs/extract-types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const MINITYPE_SRC = resolve(__dirname, "../../../../minitype/src");
@@ -47,7 +50,7 @@ function resolveExtractDirectives(content: string): string {
         );
         return match;
       }
-      return `\`\`\`ts\n${extracted}\n\`\`\``;
+      return `\`\`\`ts\n${formatWithBiome(extracted)}\n\`\`\``;
     },
   );
 }
@@ -61,7 +64,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const GET: APIRoute = ({ props }) => {
-  const raw = rawFiles[`/src/content/docs/${props.id}.md`];
+  const raw =
+    rawFiles[`/src/content/docs/${props.id}.md`] ??
+    rawFiles[`/src/content/docs/${props.id}/index.md`];
+  if (raw == null) {
+    return new Response("Not Found", { status: 404 });
+  }
   const content = resolveExtractDirectives(raw);
   return new Response(content, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

@@ -1,3 +1,24 @@
+import { execFileSync } from "node:child_process";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const BIOME_BIN = resolve(__dirname, "../../node_modules/.bin/biome");
+
+/**
+ * Biome CLI を使って TypeScript コードをフォーマットする．
+ */
+export const formatWithBiome = (code: string): string => {
+  try {
+    return execFileSync(BIOME_BIN, ["format", "--stdin-file-path=type.d.ts"], {
+      input: code,
+      encoding: "utf-8",
+    }).trim();
+  } catch {
+    return code;
+  }
+};
+
 /**
  * TypeScript ソースからブロックコメントと行コメントを除去する．
  */

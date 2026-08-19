@@ -2,7 +2,10 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { visit } from "unist-util-visit";
-import { extractTypeDefinition } from "../libs/extract-types.ts";
+import {
+  extractTypeDefinition,
+  formatWithBiome,
+} from "../libs/extract-types.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const MINITYPE_SRC = resolve(__dirname, "../../../minitype/src");
@@ -61,7 +64,12 @@ const remarkExtractTypes = () => {
       code,
       hasCodeFallback,
     } of replacements.reverse()) {
-      const codeNode = { type: "code", lang: "ts", meta: null, value: code };
+      const codeNode = {
+        type: "code",
+        lang: "ts",
+        meta: null,
+        value: formatWithBiome(code),
+      };
       if (hasCodeFallback) {
         // ディレクティブの直後にコードブロックがある場合はまとめて置換
         parent.children.splice(index, 2, codeNode);
