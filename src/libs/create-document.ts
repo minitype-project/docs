@@ -1,6 +1,7 @@
 import type * as MinitypeModule from "@minitype/minitype";
 import type {
   Body,
+  CompositeFont,
   InlineOrExtender,
   MarkdownMapping,
   Text,
@@ -40,13 +41,18 @@ export const generatePdf = async (
     await Promise.all([
       fetch("/fonts/GenInterfaceJP-Regular.ttf").then((r) => r.arrayBuffer()),
       fetch("/fonts/GenInterfaceJP-Bold.ttf").then((r) => r.arrayBuffer()),
-      fetch("/fonts/NOTONOTO35HS-Regular.ttf").then((r) => r.arrayBuffer()),
+      fetch("/fonts/NotoSansMono-Variable.ttf").then((r) => r.arrayBuffer()),
       fetch("/fonts/SourceHanSerifJP-Regular.otf").then((r) => r.arrayBuffer()),
       fetch(`/raw/${docId}.md`).then((r) => r.text()),
       headerImagePath
         ? fetch(headerImagePath).then((r) => r.arrayBuffer())
         : Promise.resolve(null),
     ]);
+
+  const monoFont: CompositeFont = {
+    latin: { font: "NotoSansMono-Variable" },
+    default: { font: "GenInterfaceJP-Regular" },
+  };
 
   // YAML フロントマターを除去
   const markdown = rawMarkdown.replace(/^---[\s\S]*?---\n*/, "");
@@ -259,7 +265,7 @@ export const generatePdf = async (
         code: {
           lineHeight: em(1.5),
           align: "left",
-          font: "NOTONOTO35HS-Regular",
+          font: monoFont,
           firstIndent: 0,
         },
         caption: {
@@ -272,7 +278,7 @@ export const generatePdf = async (
       },
       command: {
         b: { font: "GenInterfaceJP-Bold" },
-        c: { font: "NOTONOTO35HS-Regular", padding: physical(0) },
+        c: { font: monoFont, padding: physical(0) },
       },
       gaps: [
         ["image", "caption", 2],
@@ -292,7 +298,7 @@ export const generatePdf = async (
       fonts: [
         { fontKey: "GenInterfaceJP-Regular", data: fontReg },
         { fontKey: "GenInterfaceJP-Bold", data: fontBold },
-        { fontKey: "NOTONOTO35HS-Regular", data: fontMono },
+        { fontKey: "NotoSansMono-Variable", data: fontMono },
         { fontKey: "SourceHanSerifJP-Regular", data: fontSerif },
       ],
       ...(headerImagePath && headerData

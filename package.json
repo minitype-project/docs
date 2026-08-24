@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "subset-fonts": "node scripts/subset-fonts.mjs",
+    "build": "node scripts/subset-fonts.mjs && astro build",
     "preview": "astro preview",
     "check": "biome check --write .",
     "deploy": "astro build && wrangler pages deploy dist --project-name=minitype-docs"

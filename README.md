@@ -12,13 +12,24 @@ minitype の公式サイト兼ドキュメントです．
 ```bash
 # 開発サーバを起動
 yarn dev
-# ビルド & デプロイ
+# フォントサブセット化
+yarn subset-fonts
+# フォントサブセット化 & ビルド & デプロイ
 yarn build
 # デプロイ
 yarn deploy
 # フォーマット
 yarn run check
 ```
+
+## フォントのサブセット化
+
+`public/fonts/` に配置するフォントは，`fonts-src/` のオリジナルフォントをサブセット化したものです．
+サブセット化には [fonttools](https://github.com/fonttools/fonttools) の `pyftsubset` を使用します．
+
+`pyftsubset` が未インストールの場合は，`pip install fonttools` でインストールしてください．
+
+## 認証
 
 サイト全体に Basic 認証を掛ける場合，環境変数を設定します．
 

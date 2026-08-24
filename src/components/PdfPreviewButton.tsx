@@ -86,7 +86,6 @@ export default function PdfPreviewButton({ docId, title = "" }: Props) {
     setErrorMsg("");
 
     try {
-      polyfillCryptoRandomUUID();
       const mt = await loadMinitype();
       const pdfData = await generatePdf(docId, title, mt as MinitypeApi, {
         headerImagePath: "/quick-start/header.jpg",
