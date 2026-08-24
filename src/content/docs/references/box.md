@@ -15,7 +15,7 @@ title: ボックス，フレックスボックス
 type BoxStyle = {
   // 段組
   columns: number;          // 段数（既定値：1）
-  columnGap: number;        // 段間の幅（mm，既定値：5）
+  columnGap: number;        // 段間の幅（mm，既定値：4）
   columnBorder?: Border;    // 段間の罫線
   columnFill: "auto" | "balance"; // 段の高さ揃え方（既定値："auto"）
 
@@ -84,6 +84,10 @@ box([/* ... */], {
 });
 ```
 
+段組時に脚注がある場合，`footnoteSpan` で配置方法を制御できます．
+既定値は `"all"` で，全段にまたがってページ下部に配置されます．
+`"column"` を指定すると，各段の下部にそれぞれ配置されます．
+
 ### 分割制御
 
 ボックスは既定（`splitable: false`）で途中改ページを避け，現在の段に収まらない場合は次の段へ送られます．
@@ -108,6 +112,9 @@ float("top", [image("chart.png"), caption("図のキャプション")]);
 ```
 
 ### テキストの回り込み
+
+`inlineSize` を指定してボックスの幅を固定した場合，`align` でページ内の配置方向を指定できます．
+`"left"` で左揃え，`"center"` で中央揃え，`"right"` で右揃えになります．
 
 `wrap` を指定すると，ボックスを指定した方向に配置し，後続のテキストをその反対側に回り込ませます．
 `wrap` を使用する場合は `inlineSize` の指定が必要です．
@@ -134,15 +141,16 @@ box([image("diagram.svg")], {
 ボックスには背景，枠線，角丸，余白を設定できます．
 
 ```ts
-import { box, cmyk, fill, logical, p, physical, solid } from "@minitype/minitype";
+import { box, cmyk, fill, p, physical, solid } from "@minitype/minitype";
 
 box([p("囲み記事の内容")], {
   padding: physical(4, 6, 4, 6),
   background: [fill(cmyk(0, 0, 0, 5))],
-  border: logical({
+  border: {
+    type: "logical",
     blockStart: solid(0.5, cmyk(0, 0, 0, 80)),
     blockEnd: solid(0.5, cmyk(0, 0, 0, 80)),
-  }),
+  },
   borderRadius: 2,
 });
 ```
@@ -201,6 +209,11 @@ flexbox([
 
 `inlineSize` を持つボックスの幅が確定した後，残りの幅を `inlineSize` を持たないボックスで均等に分割します．
 `fr()` 単位が混在する場合は，`fr` ボックス同士で残り幅を按分します．
+
+### 子ボックスの間隔
+
+`gap` で子ボックス間の間隔を mm 単位で指定します．
+既定値は 0 mm です．
 
 ### alignItems
 

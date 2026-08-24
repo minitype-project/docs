@@ -76,6 +76,16 @@ padding: (pageIndex) => {
 
 `calculatePhysicalPadding` を使用すると，ページサイズ，1 行の文字数，行数，文字サイズ，行送り，および書字方向から，版面を中央に置くためのパディングを計算できます．
 
+```ts
+import { Q, em, calculatePhysicalPadding, type DocumentStyle } from "@minitype/minitype";
+
+const style: Partial<DocumentStyle> = {
+  size: "A5",
+  writingMode: "vertical",
+  padding: calculatePhysicalPadding("A5", 35, 17, Q(13), em(1.8), "vertical"),
+};
+```
+
 ### 物理方向と論理方向
 
 `physical()` は上，右，下，左という用紙上の方向を指定します．
@@ -92,6 +102,12 @@ padding: (pageIndex) => {
 `blockStart` および `blockEnd` は行が並ぶ方向，`inlineStart` および `inlineEnd` は文字が並ぶ方向の始端および終端です．
 横組と縦組の双方で同じ意図を保つ場合には，論理方向を使用します．
 
+| 引数の数 | 適用される方向 |
+| --- | --- |
+| 1 | 全辺 |
+| 2 | ブロック方向，インライン方向 |
+| 4 | ブロック開始，インライン終了，ブロック終了，インライン開始 |
+
 ```ts
 import { logical, physical } from "@minitype/minitype";
 
@@ -105,8 +121,9 @@ logical(10, 15);  // ブロック方向 10 mm，インライン方向 15 mmで�
 
 `gaps` の各要素は `[前のブロック種別, 後のブロック種別, アキ]` という形式です．
 アキの数値は mm 単位です．
-ブロック種別には `"paragraph"`，`"h1"`–`"h4"`，`"code"`，`"li1"`–`"li3"`，`"image"`，`"shape"`，`"caption"`，`"footnote"`，`"box"`，および `"flexbox"` を指定できます．
+ブロック種別には `"paragraph"`，`"h1"`–`"h4"`，`"code"`，`"math"`，`"li1"`–`"li3"`，`"image"`，`"shape"`，`"caption"`，`"footnote"`，`"box"`，および `"flexbox"` を指定できます．
 `"fallback"` は任意のブロック種別に一致します．
+また，画像またはボックスに `gapRole` を指定した場合，その文字列をブロック種別として使用できます．
 
 ```ts
 gaps: [
@@ -151,11 +168,12 @@ gaps: [
 | `splitable` | ブロックを段またはページの途中で分割できるかを指定します． |
 | `needspace` | 分割しないブロックの配置後に必要な空き領域を mm 単位で指定します． |
 | `gyodori` | ブロックが占める行数を指定します．実際の行数を受け取る関数も指定できます． |
-| `headingNumberFormat` | `h1`–`h4` の通し番号と見出しレベルから，表示する番号を返す関数です． |
+| `headingNumberFormat` | `h1`–`h4` の各レベルの通し番号の配列と見出しレベルから，表示する番号を返す関数です． |
 | `dropCap` | 段落先頭のドロップキャップを指定します． |
 
 `align` の関数に渡される `pageIndex` は 0 から始まります．
-`headingNumberFormat` に渡される見出し番号は 1 から始まります．
+`headingNumberFormat` の第 1 引数は，h1，h2，h3，h4 の順に通し番号を格納した配列です．
+各通し番号は 1 から始まります．
 
 ```ts
 block: {
@@ -224,8 +242,9 @@ block: {
 
 ### 画像，図形，表，および数式
 
-画像では，幅，高さ，配置，および PDF を画像として埋め込む際のページ番号を指定できます．
+画像では，幅，高さ，配置，PDF を画像として埋め込む際のページ番号，およびギャップ計算に使用するブロック種別を指定できます．
 幅および高さには mm 単位の数値または親要素に対する `ratio()` を指定します．
+`gapRole` には任意の文字列を指定でき，`gaps` のブロック種別として使用できます．
 
 <!-- @extract:style/block-style.ts#ImageStyle -->
 
@@ -441,6 +460,9 @@ const effects = [
 オフセット付きの塗りまたはストロークは，シャドウ等に使用できます．
 `imageFill()` のサイズには，画像全体を枠内に収める `"fit"` または枠全体を覆う `"cover"` を指定します．
 
+`borderRadius` には角丸の半径を mm 単位で指定します．
+`openCornerRound` を有効にすると，矩形が段またはページをまたいで分割される際に，途切れた辺に隣接する角に角丸を適用します．
+`openSideBorder` を有効にすると，分割時に途切れた辺の枠線を描画します．
 `underline`，`overline`，および `strikethrough` には，線幅，色，および基準位置からのオフセットを指定します．
 
 ```ts
