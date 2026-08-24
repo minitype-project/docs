@@ -23,8 +23,13 @@ yarn run check
 サイト全体に Basic 認証を掛ける場合，環境変数を設定します．
 
 ```bash
+# 設定
 npx wrangler pages secret put BASIC_AUTH_USER
 npx wrangler pages secret put BASIC_AUTH_PASSWORD
+
+# 削除
+npx wrangler pages secret delete BASIC_AUTH_USER
+npx wrangler pages secret delete BASIC_AUTH_PASSWORD
 ```
 
 ## 文章記述

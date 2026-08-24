@@ -192,12 +192,16 @@ newcolumn();
 
 <!-- @extract:lib/block.ts#Vspace -->
 
-ヘルパ関数として `vspace()` が用意されています．
+`additive: false`（既定値）にした場合，隣接するブロック間の `gaps` を無視して，指定した大きさのスペースを絶対値で挿入します．
+`additive: true` にした場合，`gaps` によるスペースに指定した大きさを加算して挿入します．
+
+ヘルパ関数として `vspace()`（`additive: false` として動作）および `addvspace()`（`additive: true` として動作）が用意されています．
 
 ```ts
-import { vspace } from "@minitype/minitype";
+import { addvspace, vspace } from "@minitype/minitype";
 
 vspace(10);
+addvspace(10);
 ```
 
 ### ボックス（Box），フレックスボックス（Flexbox）
