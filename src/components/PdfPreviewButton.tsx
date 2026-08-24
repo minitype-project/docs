@@ -4,7 +4,9 @@ import { generatePdf, type MinitypeApi } from "../libs/create-document";
 type Status = "idle" | "loading" | "error";
 
 interface Props {
+  /** ドキュメント ID（`entry.slug` を渡す）． */
   docId: string;
+  /** PDF のタイトルとして使用する文字列． */
   title?: string;
 }
 
@@ -13,6 +15,26 @@ const MT_READY_EVENT = "__minitype_ready__";
 const MT_ERROR_EVENT = "__minitype_error__";
 const MT_SCRIPT_ID = "__minitype_script__";
 
+/**
+ * `crypto.randomUUID` が未実装の環境（iOS Safari 14 以前等）向けのポリフィル．
+ */
+const polyfillCryptoRandomUUID = () => {
+  if (typeof crypto !== "undefined" && !crypto.randomUUID) {
+    crypto.randomUUID = () => {
+      const bytes = crypto.getRandomValues(new Uint8Array(16));
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+      const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0"));
+      return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex.slice(6, 8).join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10).join("")}` as `${string}-${string}-${string}-${string}-${string}`;
+    };
+  }
+};
+
+/**
+ * minitype のブラウザビルドを動的に読み込む．
+ * `<script type="module">` を挿入して `/minitype/index.browser.js` を import して，モジュールを `window` にキャッシュする．
+ * 2 回目以降はキャッシュから即座に返す．
+ */
 const loadMinitype = (): Promise<Record<string, unknown>> => {
   const g = globalThis as Record<string, unknown>;
 
@@ -68,24 +90,34 @@ import(${JSON.stringify(moduleUrl)}).then(m => {
   });
 };
 
-export default function PdfPreviewButton({ docId, title = "" }: Props) {
+/**
+ * クリックすると現在のドキュメントを PDF として生成し，新しいタブで開くボタン．
+ * minitype のブラウザビルドを遅延読み込みし，フォントと Markdown を fetch してクライアントサイドで PDF を生成する．
+ * 生成中は「組版中……」と表示して，エラー時はメッセージをボタン下に表示する．
+ */
+const PdfPreviewButton = ({ docId, title = "" }: Props) => {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const prevUrl = useRef<string | null>(null);
 
   useEffect(() => {
     return () => {
-      if (prevUrl.current) URL.revokeObjectURL(prevUrl.current);
+      if (prevUrl.current) {
+        URL.revokeObjectURL(prevUrl.current);
+      }
     };
   }, []);
 
   const handleClick = useCallback(async () => {
-    if (status === "loading") return;
+    if (status === "loading") {
+      return;
+    }
 
     setStatus("loading");
     setErrorMsg("");
 
     try {
+      polyfillCryptoRandomUUID();
       const mt = await loadMinitype();
       const pdfData = await generatePdf(docId, title, mt as MinitypeApi, {
         headerImagePath: "/quick-start/header.jpg",
@@ -145,4 +177,6 @@ export default function PdfPreviewButton({ docId, title = "" }: Props) {
       )}
     </div>
   );
-}
+};
+
+export default PdfPreviewButton;
