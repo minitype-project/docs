@@ -1,4 +1,4 @@
-// fonts-src/ のフォントを src/content/docs/ の全文書にて使用される文字にサブセット化して
+// fonts-src/ のフォントを src/ 以下の全ソースファイルにて使用される文字にサブセット化して
 // public/fonts/ に出力する．
 
 import { execSync } from "node:child_process";
@@ -17,15 +17,17 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(fileURLToPath(import.meta.url), "../../");
 const FONTS_SRC = join(ROOT, "fonts-src");
 const FONTS_OUT = join(ROOT, "public/fonts");
-const CONTENT_DIR = join(ROOT, "src/content/docs");
+const SRC_DIR = join(ROOT, "src");
 
-const collectMdFiles = (dir) => {
+const EXTENSIONS = [".md", ".astro", ".tsx", ".ts"];
+
+const collectSrcFiles = (dir) => {
   const results = [];
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     if (statSync(full).isDirectory()) {
-      results.push(...collectMdFiles(full));
-    } else if (entry.endsWith(".md")) {
+      results.push(...collectSrcFiles(full));
+    } else if (EXTENSIONS.some((ext) => entry.endsWith(ext))) {
       results.push(full);
     }
   }
@@ -45,8 +47,8 @@ for (let cp = 0x20; cp <= 0x7e; cp++) {
   chars.add(String.fromCodePoint(cp));
 }
 
-// 全 Markdown 文書の文字
-for (const file of collectMdFiles(CONTENT_DIR)) {
+// src/ 以下の全ソースファイルの文字
+for (const file of collectSrcFiles(SRC_DIR)) {
   for (const ch of readFileSync(file, "utf-8")) {
     chars.add(ch);
   }

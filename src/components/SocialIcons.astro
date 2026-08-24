@@ -1,5 +1,5 @@
 ---
-import { MdMail } from "react-icons/md";
+import { MdCloud, MdMail } from "react-icons/md";
 ---
 
 <a href="/contact" class="contact-icon-link" aria-label="お問い合わせ">
@@ -11,7 +11,9 @@ import { MdMail } from "react-icons/md";
   </svg>
   npm
 </a>
-<a href="https://cloud.typeset.jp" target="_blank" rel="noopener" class="cloud-link">minitype-cloud</a>
+<a href="https://cloud.typeset.jp" target="_blank" rel="noopener" class="cloud-link">
+  <MdCloud size={20} />cloud
+</a>
 
 <style>
   .contact-icon-link {
@@ -39,19 +41,17 @@ import { MdMail } from "react-icons/md";
   }
 
   .cloud-link {
-    color: #fff;
+    color: hsl(var(--brand-hue), 50%, 50%);
     text-decoration: none;
     font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 8px;
-    background: hsl(var(--brand-hue), 50%, 50%);
     display: inline-flex;
     align-items: center;
+    gap: 4px;
+    white-space: nowrap;
     transition: opacity 0.15s;
   }
 
   .cloud-link:hover {
-    color: #fff;
-    opacity: 0.85;
+    opacity: 0.7;
   }
 </style>
