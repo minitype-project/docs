@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MdCheck, MdContentCopy } from "react-icons/md";
 
-const INSTALL_CMD = "npm i @minitype/minitype";
+const INSTALL_CMD = "npm create minitype";
 
 export default function InstallCommand() {
   const [copied, setCopied] = useState(false);
