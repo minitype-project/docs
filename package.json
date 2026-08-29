@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/react": "^4.3.0",
     "@astrojs/starlight": "^0.34.0",
-    "@minitype/minitype": "link:../minitype",
+    "@minitype/minitype": "^0.1.1",
     "astro": "^5.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -35,8 +35,8 @@ vite-plugin はオープンソースにて公開されています．使用方�
 | パッケージ | ライセンス |
 | --- | --- |
 | `@minitype/minitype` | [Polyform Strict License 1.0.0](https://polyformproject.org/licenses/strict/1.0.0) |
-| `create-minitype` | MIT |
-| `@minitype/vite-plugin` | MIT |
+| `create-minitype` | [MIT License](https://opensource.org/license/mit) |
+| `@minitype/vite-plugin` | [MIT License](https://opensource.org/license/mit) |
 
 `@minitype/minitype` では，個人利用を含む非商用目的での利用は自由に行えますが，商用目的での利用，改変，および再配布は許可されていません．商用利用をご希望の場合は，別途お問い合わせください．
 上記にかかわらず，個人またはサークルによる同人活動を目的とした利用は，成果物の有償頒布を伴う場合を含めて許可されます．
