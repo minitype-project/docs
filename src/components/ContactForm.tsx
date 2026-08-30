@@ -117,6 +117,13 @@ const ContactForm = () => {
         <div className="field">
           <label htmlFor="body" className="label">
             本文
+            <br />
+            バグ報告の場合には，(1) minitype のバージョン（v.x.x.x），(2)
+            実行環境（Node.js，Bun または，Web ブラウザ名），(3) バグ内容，(4)
+            再現手順，(5) 期待される動作，(6) 実際の動作 をお書きください．
+            <br />
+            機能要望の場合には，(1) 要望の概要，(2) 背景・動機
+            をお書きください．
           </label>
           <textarea
             id="body"
@@ -124,7 +131,7 @@ const ContactForm = () => {
             value={body}
             onChange={(e) => setBody(e.target.value)}
             className="input textarea"
-            placeholder="お問い合わせ内容をご入力ください"
+            placeholder="お問い合わせ内容をご入力ください．"
             rows={8}
             required
           />
