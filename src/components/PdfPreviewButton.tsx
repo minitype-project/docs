@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { generatePdf, type MinitypeApi } from "../libs/create-document";
+import {
+  generatePdf,
+  type MinitypeApi,
+  preprocessMarkdown,
+} from "../libs/create-document";
 
 type Status = "idle" | "loading" | "error";
 

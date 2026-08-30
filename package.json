@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "check": "biome check --write .",
     "deploy": "astro build && wrangler pages deploy dist --project-name=minitype-docs",
-    "import-zenn": "node scripts/import-zenn.mjs"
+    "import-zenn": "node scripts/import-zenn.mjs",
+    "generate-pdf": "node --experimental-strip-types scripts/generate-pdf.ts"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",

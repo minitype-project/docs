@@ -11,10 +11,10 @@ import type {
 export type MinitypeApi = typeof MinitypeModule;
 
 export const generatePdf = async (
-  docId: string,
   title: string,
+  markdown: string,
   api: MinitypeApi,
-  options: { headerImagePath: string },
+  options: PdfOptions,
 ): Promise<Uint8Array> => {
   const {
     minitype,
@@ -39,28 +39,22 @@ export const generatePdf = async (
     vspace,
   } = api;
 
-  const { headerImagePath } = options;
-  const magenta = cmyk(0, 80, 0, 0);
+  const {
+    fontReg,
+    fontBold,
+    fontMono,
+    fontSerif,
+    headerImagePath,
+    headerImageData,
+    localImages = [],
+  } = options;
 
-  const [fontReg, fontBold, fontMono, fontSerif, rawMarkdown, headerData] =
-    await Promise.all([
-      fetch("/fonts/GenInterfaceJP-Regular.ttf").then((r) => r.arrayBuffer()),
-      fetch("/fonts/GenInterfaceJP-Bold.ttf").then((r) => r.arrayBuffer()),
-      fetch("/fonts/NotoSansMono-Variable.ttf").then((r) => r.arrayBuffer()),
-      fetch("/fonts/SourceHanSerifJP-Regular.otf").then((r) => r.arrayBuffer()),
-      fetch(`/raw/${docId}.md`).then((r) => r.text()),
-      headerImagePath
-        ? fetch(headerImagePath).then((r) => r.arrayBuffer())
-        : Promise.resolve(null),
-    ]);
+  const magenta = cmyk(0, 80, 0, 0);
 
   const monoFont: CompositeFont = {
     latin: { font: "NotoSansMono-Variable" },
     default: { font: "GenInterfaceJP-Regular" },
   };
-
-  // YAML フロントマターを除去
-  const markdown = rawMarkdown.replace(/^---[\s\S]*?---\n*/, "");
 
   const h2 = (inlines: InlineOrExtender[]) => ({
     type: "box",
@@ -117,11 +111,27 @@ export const generatePdf = async (
     },
   });
 
+  const imageMapper = (
+    src: string,
+    _alt: string,
+    imageTitle: string | null,
+  ): Block | Block[] => {
+    // figure() が「図 N：」を自動付与するため，元テキストの「図N：」プレフィックスを除去
+    const normalizedTitle = imageTitle
+      ? imageTitle.replace(/^図\s*\d+[：]\s*/, "")
+      : null;
+    const figureBlock = normalizedTitle
+      ? figure(src, normalizedTitle, { align: "center", width: ratio(1) })
+      : image(src, { align: "center", width: ratio(1) });
+    return float("top", [figureBlock]);
+  };
+
   const { blocks } = mdString(markdown, {
     h2,
     h3,
     h4,
     code,
+    image: imageMapper,
   } as MarkdownMapping);
 
   // タイトル直下に表示するリード段落（最初の見出しより前の段落）を抽出
@@ -151,6 +161,24 @@ export const generatePdf = async (
   const columnWidth = paragraphSize * 25;
   const horizontal = (width - columnWidth * 2 - 8) / 2;
 
+  // ヘッダー画像 rect の高さをタイトル・リード段落の推定高さに合わせて計算
+  // 全角: fontSize 幅，半角: fontSize * 0.5 幅 として描画幅を推定
+  const estimateStringWidth = (text: string, fontSize: number): number => {
+    return [...text].reduce(
+      (sum, char) =>
+        sum + ((char.codePointAt(0) ?? 0) > 0x7f ? fontSize : fontSize * 0.5),
+      0,
+    );
+  };
+
+  const contentWidth = columnWidth * 2 + 8;
+  const h1Size = 8;
+  const titleLineCount = Math.ceil(
+    estimateStringWidth(title, h1Size) / contentWidth,
+  );
+  const h1VspaceSize = 2;
+  const titleHeight = titleLineCount * (h1Size * 1.3) + h1VspaceSize;
+
   const titleEffects = headerImagePath
     ? [
         fill(cmyk(0, 0, 0, 0)),
@@ -161,6 +189,7 @@ export const generatePdf = async (
   const titleBlock = box(
     [
       h1([[title]], { effects: titleEffects }),
+      vspace(h1VspaceSize),
       ...(leadParagraphs.length > 0 ? leadParagraphs : []),
     ],
     {
@@ -205,14 +234,7 @@ export const generatePdf = async (
       blockOffset: 4,
       blocks: [p([[page]], { size: 3, align: "center", firstIndent: 0 })],
     },
-    {
-      type: "flow",
-      position: "page",
-      blockOffset: 0,
-      blocks: [rect(210, 60, { background: [imageFill(headerImagePath)] })],
-      page: (pageIndex: number) => pageIndex === 0,
-      zIndex: -10,
-    },
+    ...headerImageFlow,
     titleBlock,
     ...(headerImagePath ? [vspace(14)] : []),
     box(bodyBlocks, { columns: 2, columnGap: 8 }),
@@ -222,7 +244,7 @@ export const generatePdf = async (
     [{ body }],
     {
       size: pageSize,
-      padding: physical(32, horizontal, 22, horizontal),
+      padding: physical(pagePaddingTop, horizontal, 22, horizontal),
       block: {
         paragraph: {
           size: paragraphSize,
@@ -233,8 +255,8 @@ export const generatePdf = async (
         },
         image: { align: "center", width: 140 },
         h1: {
-          size: 8,
-          lineHeight: 8 * 1.4,
+          size: h1Size,
+          lineHeight: h1Size * 1.3,
           font: "GenInterfaceJP-Bold",
           firstIndent: 0,
           kerning: true,
@@ -296,6 +318,15 @@ export const generatePdf = async (
         ["fallback", "h2", 6],
         ["fallback", "h3", 4],
         ["li1", "li1", 1],
+        ["li1", "li2", 1],
+        ["li2", "li1", 1],
+        ["li2", "li2", 1],
+        ["li2", "li3", 1],
+        ["li3", "li2", 1],
+        ["li3", "li3", 1],
+        ["image", "caption", 4],
+        ["fallback", "figure", 4],
+        ["figure", "fallback", 4],
         ["fallback", "fallback", 3],
       ],
     },
@@ -306,9 +337,12 @@ export const generatePdf = async (
         { fontKey: "NotoSansMono-Variable", data: fontMono },
         { fontKey: "SourceHanSerifJP-Regular", data: fontSerif },
       ],
-      ...(headerImagePath && headerData
-        ? { browserFiles: [{ path: headerImagePath, data: headerData }] }
-        : {}),
+      browserFiles: [
+        ...(headerImagePath && headerImageData
+          ? [{ path: headerImagePath, data: headerImageData }]
+          : []),
+        ...localImages,
+      ],
     },
   );
 
