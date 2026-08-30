@@ -9,6 +9,51 @@ import remarkFigureCaption from "./src/plugins/remark-figure-caption.mjs";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
+/**
+ * 開発サーバー上で外部画像をプロキシする Vite プラグイン．
+ *
+ * `/__image_proxy__?url=<encodedUrl>` へのリクエストを受け取り，
+ * `url` クエリパラメータで指定された外部 URL から画像を取得して返す．
+ * CORS ヘッダー（`Access-Control-Allow-Origin: *`）を付与するため，クロスオリジン制約のある環境でも画像を読み込める．
+ *
+ * @returns {import('vite').Plugin} Vite プラグインオブジェクト
+ */
+const imageProxyPlugin = () => ({
+  name: "image-proxy",
+  configureServer(server) {
+    server.middlewares.use(async (req, res, next) => {
+      if (!req.url?.startsWith("/__image_proxy__")) {
+        next();
+        return;
+      }
+      const qs = req.url.includes("?")
+        ? req.url.slice(req.url.indexOf("?") + 1)
+        : "";
+      const targetUrl = new URLSearchParams(qs).get("url");
+      if (!targetUrl) {
+        next();
+        return;
+      }
+      try {
+        const r = await fetch(targetUrl);
+        if (!r.ok) {
+          next();
+          return;
+        }
+        const data = await r.arrayBuffer();
+        res.setHeader(
+          "Content-Type",
+          r.headers.get("content-type") || "image/png",
+        );
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.end(Buffer.from(data));
+      } catch {
+        next();
+      }
+    });
+  },
+});
+
 const minitypeBrowserPlugin = () => {
   const distDir = resolve(__dirname, "node_modules/@minitype/minitype/dist");
   const assets = [
@@ -50,7 +95,7 @@ export default defineConfig({
     remarkPlugins: [remarkExtractTypes, remarkFigureCaption],
   },
   vite: {
-    plugins: [minitypeBrowserPlugin()],
+    plugins: [imageProxyPlugin(), minitypeBrowserPlugin()],
   },
   integrations: [
     starlight({
