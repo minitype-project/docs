@@ -1,0 +1,19 @@
+---
+import Default from "@astrojs/starlight/components/Head.astro";
+import OgpMeta from "./OgpMeta.astro";
+
+const { entry, siteTitle } = Astro.props;
+
+const pageTitle = entry?.data.title
+  ? `${entry.data.title} – ${siteTitle}`
+  : siteTitle;
+
+const description =
+  entry?.data.description ??
+  "高品質で美しい文書を生成するための TypeScript ライブラリ";
+
+const canonicalUrl = new URL(Astro.url.pathname, "https://typeset.jp").href;
+---
+
+<Default {...Astro.props}><slot /></Default>
+<OgpMeta title={pageTitle} description={description} url={canonicalUrl} />
