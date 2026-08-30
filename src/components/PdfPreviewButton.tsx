@@ -122,9 +122,58 @@ const PdfPreviewButton = ({ docId, title = "" }: Props) => {
 
     try {
       polyfillCryptoRandomUUID();
-      const mt = await loadMinitype();
-      const pdfData = await generatePdf(docId, title, mt as MinitypeApi, {
-        headerImagePath: "/quick-start/header.jpg",
+      const headerImagePath = "/quick-start/header.jpg";
+
+      const [mt, rawMarkdown] = await Promise.all([
+        loadMinitype(),
+        fetch(`/raw/${docId}.md`).then((r) => r.text()),
+      ]);
+
+      const markdown = preprocessMarkdown(rawMarkdown);
+
+      const localImageSrcs = [
+        ...new Set(
+          [...markdown.matchAll(/!\[[^\]]*\]\(([^)\s"]+)/g)]
+            .map((m) => m[1])
+            .filter((u) => u.startsWith("/")),
+        ),
+      ];
+
+      const [
+        fontReg,
+        fontBold,
+        fontMono,
+        fontSerif,
+        headerData,
+        ...imageResults
+      ] = await Promise.all([
+        fetch("/fonts/GenInterfaceJP-Regular.ttf").then((r) => r.arrayBuffer()),
+        fetch("/fonts/GenInterfaceJP-Bold.ttf").then((r) => r.arrayBuffer()),
+        fetch("/fonts/NotoSansMono-Variable.ttf").then((r) => r.arrayBuffer()),
+        fetch("/fonts/SourceHanSerifJP-Regular.otf").then((r) =>
+          r.arrayBuffer(),
+        ),
+        fetch(headerImagePath).then((r) => r.arrayBuffer()),
+        ...localImageSrcs.map((path) =>
+          fetch(path)
+            .then((r) => (r.ok ? r.arrayBuffer() : null))
+            .catch(() => null),
+        ),
+      ]);
+
+      const localImages = localImageSrcs.flatMap((path, i) => {
+        const data = imageResults[i];
+        return data ? [{ path, data }] : [];
+      });
+
+      const pdfData = await generatePdf(title, markdown, mt as MinitypeApi, {
+        fontReg,
+        fontBold,
+        fontMono,
+        fontSerif,
+        headerImagePath,
+        headerImageData: headerData,
+        localImages,
       });
       const blob = new Blob([pdfData as Uint8Array<ArrayBuffer>], {
         type: "application/pdf",

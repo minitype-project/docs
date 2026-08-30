@@ -10,6 +10,51 @@ import type {
 
 export type MinitypeApi = typeof MinitypeModule;
 
+export interface PdfOptions {
+  fontReg: ArrayBuffer;
+  fontBold: ArrayBuffer;
+  fontMono: ArrayBuffer;
+  fontSerif: ArrayBuffer;
+  /** ブラウザ："/quick-start/header.jpg"，Node.js：絶対パス */
+  headerImagePath: string | null;
+  /** ブラウザ用：フェッチ済みのヘッダー画像データ */
+  headerImageData?: ArrayBuffer | null;
+  /** ブラウザ用：Markdown 内ローカル画像のフェッチ済みデータ */
+  localImages?: { path: string; data: ArrayBuffer }[];
+}
+
+/**
+ * YAML フロントマター除去 + Zenn 形式 → minitype 形式の前処理を行う．
+ */
+export const preprocessMarkdown = (rawMarkdown: string): string => {
+  const stripped = rawMarkdown.replace(/^---[\s\S]*?---\n*/, "");
+
+  // ![alt](url)\n_caption_ → ![alt](url "caption")
+  let processed = stripped.replace(
+    /!\[([^\]]*)\]\(([^)\s"]+)\)\s*\n\s*_([^_\n]+)_/g,
+    (_, alt: string, url: string, caption: string) =>
+      `![${alt}](${url} "${caption.replace(/"/g, '\\"')}")`,
+  );
+
+  // <sup>[\[N\]](#fn-ID)</sup> → [^fn-ID]
+  processed = processed.replace(
+    /<sup>\[\\?\[(\d+)\\?\]\]\(#(fn-[^)]+)\)<\/sup>/g,
+    (_, _num: string, id: string) => `[^${id}]`,
+  );
+
+  // N.  content [↩︎](#fnref-ID) → [^fn-ID]: content
+  processed = processed.replace(
+    /^(\d+)\.\s+(.*?)\s+\[↩︎\]\(#fnref-([^)]+)\)\s*$/gm,
+    (_, _num: string, content: string, id: string) =>
+      `[^fn-${id}]: ${content.trim()}`,
+  );
+
+  // 「脚注」見出し段落を除去
+  processed = processed.replace(/^脚注\s*$/gm, "");
+
+  return processed;
+};
+
 export const generatePdf = async (
   title: string,
   markdown: string,
@@ -201,6 +246,61 @@ export const generatePdf = async (
       },
     },
   );
+
+  /**
+   * minitype のインラインからプレーンテキストを再帰的に抽出する．
+   */
+  const extractInlineText = (inline: unknown): string => {
+    if (typeof inline === "string") {
+      return inline;
+    }
+    if (Array.isArray(inline)) {
+      return inline.map(extractInlineText).join("");
+    }
+    if (inline && typeof inline === "object") {
+      const obj = inline as Record<string, unknown>;
+      const child = obj.content ?? obj.children ?? obj.text ?? obj.lines;
+      if (child) {
+        return extractInlineText(child);
+      }
+    }
+    return "";
+  };
+
+  const leadSize = Q(13);
+
+  // 実際に白テキストとして描画されるリード段落ブロック（先頭 splitIndex 個）から
+  // テキストを抽出して高さを推定する
+  const leadHeight = blocks.slice(0, splitIndex).reduce((sum, block, i) => {
+    const b = block as { lines?: unknown[] };
+    const text = (b.lines ?? []).map(extractInlineText).join("");
+    const lineCount = Math.ceil(
+      estimateStringWidth(text, leadSize) / contentWidth,
+    );
+    return sum + lineCount * (leadSize * 1.6) + (i > 0 ? 1.5 : 0);
+  }, 0);
+
+  const pagePaddingTop = 32;
+  const titleBoxBottomPadding = 4;
+  const headerRectHeight =
+    pagePaddingTop + titleHeight + leadHeight + titleBoxBottomPadding + 7;
+
+  const headerImageFlow: Body = headerImagePath
+    ? [
+        {
+          type: "flow",
+          position: "page",
+          blockOffset: 0,
+          blocks: [
+            rect(210, headerRectHeight, {
+              background: [imageFill(headerImagePath)],
+            }),
+          ],
+          page: (pageIndex: number) => pageIndex === 0,
+          zIndex: -10,
+        },
+      ]
+    : [];
 
   const body: Body = [
     {
