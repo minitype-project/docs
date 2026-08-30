@@ -5,5 +5,5 @@ const { entry } = Astro.locals.starlightRoute;
 const docId = entry.slug;
 const title = entry.data.title;
 ---
-<h1 id="_top" style="margin-bottom: 8px;">{title}</h1>
+<h1 id="_top" style="margin-bottom: 16px; line-height: 1.5;">{title}</h1>
 <PdfPreviewButton client:load docId={docId} title={title} />

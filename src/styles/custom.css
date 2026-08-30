@@ -150,6 +150,108 @@ site-search button[data-open-modal] {
 }
 
 /* ======
+   Link card
+   ====== */
+.sl-markdown-content .link-card {
+  border: 1px solid var(--color-gray-light);
+  border-radius: 12px;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  transition: opacity 0.15s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.sl-markdown-content .link-card-anchor {
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.sl-markdown-content .link-card-body {
+  display: flex;
+  align-items: stretch;
+  margin: 0 !important;
+  padding: 0;
+  border: none;
+}
+
+.sl-markdown-content .link-card-text {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.sl-markdown-content .link-card-title {
+  color: var(--sl-color-text);
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  margin: 0 !important;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sl-markdown-content .link-card-description {
+  line-height: 1.5;
+  color: var(--sl-color-gray-2);
+  font-size: 0.8em;
+  margin: 0 !important;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.sl-markdown-content .link-card-url {
+  color: var(--sl-color-gray-3);
+  text-overflow: ellipsis;
+  font-size: 0.8em;
+  white-space: nowrap;
+  margin: 0 !important;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.sl-markdown-content .link-card-image-wrapper {
+  width: 180px;
+  flex-shrink: 0;
+  position: relative;
+  margin: 0 !important;
+  overflow: hidden;
+}
+
+.sl-markdown-content .link-card-image {
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  margin: 0 !important;
+  display: block;
+  position: absolute;
+}
+
+/* ======
+   Figure
+   ====== */
+.sl-markdown-content figcaption {
+  text-align: center;
+}
+
+/* ======
    Content panels
    ====== */
 .content-panel + .content-panel {
