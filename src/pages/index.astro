@@ -42,22 +42,22 @@ import PageLayout from "../layouts/PageLayout.astro";
     <div class="examples-inner">
       <h2 class="examples-title">minitype による組版例</h2>
       <div class="examples-grid">
-        <div class="example-card">
-          <p class="example-label">横組・本文</p>
-          <div class="example-thumb"></div>
-        </div>
-        <div class="example-card">
-          <p class="example-label">縦組</p>
-          <div class="example-thumb"></div>
-        </div>
-        <div class="example-card">
-          <p class="example-label">段組</p>
-          <div class="example-thumb"></div>
-        </div>
-        <div class="example-card">
-          <p class="example-label">ルビ・圏点</p>
-          <div class="example-thumb"></div>
-        </div>
+        <a class="example-card" href="/samples/quick-start.pdf" target="_blank" rel="noopener">
+          <p class="example-label">技術文書</p>
+          <img class="example-thumb" src="/samples/quick-start.png" alt="技術文書の組版例" loading="lazy" />
+        </a>
+        <a class="example-card" href="/samples/business.pdf" target="_blank" rel="noopener">
+          <p class="example-label">ビジネスレポート</p>
+          <img class="example-thumb" src="/samples/business.png" alt="ビジネスレポートの組版例" loading="lazy" />
+        </a>
+        <a class="example-card" href="/samples/security-report.pdf" target="_blank" rel="noopener">
+          <p class="example-label">セキュリティレポート</p>
+          <img class="example-thumb" src="/samples/security-report.png" alt="セキュリティレポートの組版例" loading="lazy" />
+        </a>
+        <a class="example-card" href="/samples/learning-print.pdf" target="_blank" rel="noopener">
+          <p class="example-label">学習用教材</p>
+          <img class="example-thumb" src="/samples/learning-print.png" alt="学習用教材の組版例" loading="lazy" />
+        </a>
       </div>
     </div>
   </section>
@@ -181,13 +181,21 @@ import PageLayout from "../layouts/PageLayout.astro";
     display: flex;
     flex-direction: column;
     gap: 10px;
+    text-decoration: none;
+
+    &:hover .example-thumb {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
   }
 
   .example-thumb {
     width: 100%;
     aspect-ratio: 210 / 297;
-    background: color-mix(in srgb, hsl(var(--brand-hue), 30%, 80%) 30%, #e8e8e8);
     border-radius: 6px;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.15s;
   }
 
   .example-label {

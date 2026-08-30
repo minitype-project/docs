@@ -2,7 +2,12 @@ import { useRef, useState } from "react";
 
 type Status = "idle" | "submitting" | "success";
 
-const CATEGORIES = ["バグ報告", "機能要望", "商用利用に関する相談", "その他"] as const;
+const CATEGORIES = [
+  "バグ報告",
+  "機能要望",
+  "商用利用に関する相談",
+  "その他",
+] as const;
 type Category = (typeof CATEGORIES)[number];
 
 const FORM_ACTION =
@@ -44,7 +49,11 @@ const ContactForm = () => {
 
   return (
     <>
-      <iframe name={IFRAME_NAME} style={{ display: "none" }} title="form-target" />
+      <iframe
+        name={IFRAME_NAME}
+        style={{ display: "none" }}
+        title="form-target"
+      />
       <form
         ref={formRef}
         action={FORM_ACTION}
