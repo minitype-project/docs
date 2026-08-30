@@ -1,5 +1,6 @@
 import type * as MinitypeModule from "@minitype/minitype";
 import type {
+  Block,
   Body,
   CompositeFont,
   InlineOrExtender,
@@ -22,12 +23,16 @@ export const generatePdf = async (
     cmyk,
     em,
     fill,
+    float,
+    figure,
     h1,
+    image,
     imageFill,
     p,
     pageSizeToSize,
     physical,
     Q,
+    ratio,
     solid,
     page,
     rect,
