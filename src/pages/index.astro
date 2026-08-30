@@ -1,4 +1,5 @@
 ---
+import { MdArrowForward } from "react-icons/md";
 import InstallCommand from "../components/InstallCommand";
 import PageLayout from "../layouts/PageLayout.astro";
 ---
@@ -18,6 +19,9 @@ import PageLayout from "../layouts/PageLayout.astro";
         <a href="/quick-start/" class="button button-primary">クイックスタート</a>
         <a href="https://www.npmjs.com/package/@minitype/minitype" class="button button-secondary" target="_blank" rel="noopener">npm でパッケージを見る</a>
       </div>
+      <p class="hero-article">
+        <MdArrowForward className="hero-article-icon" /><a href="https://zenn.dev/inaniwaudon/articles/62f1def4bad627" target="_blank" rel="noopener">解説記事（Zenn）はこちらから</a>
+      </p>
     </div>
   </section>
 
@@ -125,6 +129,27 @@ import PageLayout from "../layouts/PageLayout.astro";
     background: hsl(var(--brand-hue), 50%, 95%);
   }
 
+  .hero-article {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 16px;
+    color: #666;
+
+    a {
+      color: #666;
+      text-decoration: none;
+
+      &:hover {
+        color: hsl(var(--brand-hue), 50%, 50%);
+      }
+    }
+
+    &:has(a:hover) {
+      color: hsl(var(--brand-hue), 50%, 50%);
+    }
+  }
+
   /* Features */
   .features {
     padding: 48px 32px;
@@ -185,6 +210,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 
     &:hover .example-thumb {
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      opacity: 0.85;
     }
   }
 
@@ -195,7 +221,7 @@ import PageLayout from "../layouts/PageLayout.astro";
     object-fit: cover;
     object-position: top;
     border: 1px solid #e0e0e0;
-    transition: box-shadow 0.15s;
+    transition: box-shadow 0.15s, opacity 0.15s;
   }
 
   .example-label {
