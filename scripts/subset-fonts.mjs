@@ -8,6 +8,7 @@ import {
   readFileSync,
   rmSync,
   statSync,
+  unlinkSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -91,4 +92,16 @@ for (const font of fonts) {
 }
 
 rmSync(tmpDir, { recursive: true });
+
+// フォントを再サブセット化すると GID が変わるため，DB キャッシュを削除して再構築
+const dbPath = join(ROOT, "font-caches.db");
+try {
+  unlinkSync(dbPath);
+  unlinkSync(`${dbPath}-shm`);
+  unlinkSync(`${dbPath}-wal`);
+  console.log("Cleared font-caches.db (GID mappings changed).");
+} catch {
+  // DB が存在しない場合は無視
+}
+
 console.log("Done.");
