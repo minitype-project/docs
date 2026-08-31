@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "subset-fonts": "node scripts/subset-fonts.mjs",
     "build": "yarn import-zenn && node scripts/subset-fonts.mjs && astro build && yarn generate-pdf",
     "preview": "astro preview",
-    "check": "biome check --write .",
     "deploy": "yarn build && wrangler pages deploy dist --project-name=minitype-docs",
+    "check": "biome check --write .",
+    "subset-fonts": "node scripts/subset-fonts.mjs",
     "import-zenn": "node scripts/import-zenn.mjs 62f1def4bad627 src/content/docs/explanatory.md",
     "generate-pdf": "node --experimental-strip-types scripts/generate-pdf.ts explanatory"
   },

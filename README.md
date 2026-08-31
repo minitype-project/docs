@@ -12,14 +12,20 @@ minitype の公式サイト兼ドキュメントです．
 ```bash
 # 開発サーバを起動
 yarn dev
-# フォントサブセット化
-yarn subset-fonts
 # フォントサブセット化 & ビルド & デプロイ
 yarn build
+# プレビュー
+yarn preview
 # デプロイ
 yarn deploy
 # フォーマット
 yarn run check
+# フォントサブセット化
+yarn subset-fonts
+# Zenn 記事の取得
+yarn import-zenn
+# PDF 生成
+yarn generate-pdf
 ```
 
 ## フォントのサブセット化
@@ -28,6 +34,37 @@ yarn run check
 サブセット化には [fonttools](https://github.com/fonttools/fonttools) の `pyftsubset` を使用します．
 
 `pyftsubset` が未インストールの場合は，`pip install fonttools` でインストールしてください．
+
+`fonts-src/` に含まれるフォントのライセンスは以下の通りです．
+いずれも [SIL Open Font License 1.1](https://openfontlicense.org) のもとで配布されています．
+
+- [GenInterfaceJP](https://github.com/yamatoiizuka/gen-interface-jp)  
+  (c) 2016 The Inter Project Authors, (c) Copyright 2014-2021 Adobe, with Reserved Font Name "Source", (c) 2026 Yamato Iizuka
+- [Noto Sans Mono](https://github.com/notofonts/latin-greek-cyrillic)  
+  (c) 2022 The Noto Project Authors
+- [Source Han Serif JP](https://github.com/adobe-fonts/source-han-serif)
+  (c) 2017–2022 Adobe
+
+## Zenn 記事のインポート，PDF 生成
+
+`scripts/import-zenn.mjs` を用いて，[Zenn 上での解説記事](https://zenn.dev/inaniwaudon/articles/62f1def4bad627) をの記事を取得した後，Markdown ファイル（`src/content/docs/explanatory.md`）に変換しています．
+また，`scripts/generate-pdf.ts` を用いて Markdown ファイルから PDF 文書を生成しています．
+
+```bash
+node scripts/import-zenn.mjs <slug-または-URL> [出力パス]
+node --experimental-strip-types scripts/generate-pdf.ts <slug>
+```
+
+スクリプトは以下の処理を行います．
+
+- Zenn から記事を取得して，HTML を Markdown に変換
+- コードブロック，メッセージブロック（:::message，:::message alert），YouTube 埋め込みを Starlight の対応する形式に変換
+- 単独行の URL リンクを OGP リンクカードに変換
+- 記事内の画像を `public/zenn-images/` にダウンロードし，ローカルパスに置換
+- 見出しレベルを 1 段下げる（h1 → h2，h2 → h3，h3 → h4）
+
+PDF の生成には minitype を使用します．
+事前に `yarn build`（または `yarn subset-fonts`）を実行してサブセット済みフォントを `public/fonts/` に配置してください．
 
 ## 認証
 
