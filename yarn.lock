@@ -1251,10 +1251,10 @@
     unist-util-visit "^5.0.0"
     vfile "^6.0.0"
 
-"@minitype/minitype@^0.1.1":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@minitype/minitype/-/minitype-0.1.2.tgz#a61f5ceec724361366f26d1ca6caaf82f0f22c6c"
-  integrity sha512-wC8+p2eGtdKEqWDLzeERrfOLYDyqcpshgweQaA/9KYIlgGDAEukDUI3V9KM4Mr+g9tSNVV7S992+pwrzmtOQlw==
+"@minitype/minitype@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@minitype/minitype/-/minitype-0.1.4.tgz#78742318ecd42b32d8c4deea8ffff938d4eddaaa"
+  integrity sha512-JRyVaH8sCIc+zH4l49ss2GJgEoAr9DGY9XIn9vp/gi/zI4YOVv2ILEgGCU0bRpQss/S4ThcQTt+UqfZSEyxD4w==
   dependencies:
     "@citation-js/core" "^0.7.21"
     "@citation-js/plugin-bibtex" "^0.7.21"

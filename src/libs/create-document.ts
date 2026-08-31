@@ -52,6 +52,12 @@ export const preprocessMarkdown = (rawMarkdown: string): string => {
   // 「脚注」見出し段落を除去
   processed = processed.replace(/^脚注\s*$/gm, "");
 
+  // Markdown バックスラッシュエスケープを解除（例：\_ → _）
+  processed = processed.replace(
+    /\\([!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~])/g,
+    "$1",
+  );
+
   return processed;
 };
 
@@ -337,7 +343,11 @@ export const generatePdf = async (
     ...headerImageFlow,
     titleBlock,
     ...(headerImagePath ? [vspace(14)] : []),
-    box(bodyBlocks, { columns: 2, columnGap: 8 }),
+    box(bodyBlocks, {
+      columns: 2,
+      columnGap: 8,
+      footnoteSpan: "column",
+    }),
   ];
 
   const doc = minitype(
@@ -349,41 +359,40 @@ export const generatePdf = async (
         paragraph: {
           size: paragraphSize,
           lineHeight: em(1.6),
-          firstIndent: paragraphSize,
+          firstIndent: em(1),
           font: "GenInterfaceJP-Regular",
           effects: [fill(cmyk(0, 0, 0, 100))],
         },
         image: { align: "center", width: 140 },
         h1: {
           size: h1Size,
-          lineHeight: h1Size * 1.3,
+          lineHeight: em(1.3),
           font: "GenInterfaceJP-Bold",
-          firstIndent: 0,
           kerning: true,
           align: "left",
         },
         h2: {
           size: 4.5,
           font: "GenInterfaceJP-Bold",
-          firstIndent: 0,
           kerning: true,
           align: "left",
+          needspace: 10,
           headingNumberFormat: () => "",
         },
         h3: {
           size: 4,
           font: "GenInterfaceJP-Bold",
-          firstIndent: 0,
           kerning: true,
           align: "left",
+          needspace: 10,
           headingNumberFormat: () => "",
         },
         h4: {
           size: 3.5,
           font: "GenInterfaceJP-Bold",
-          firstIndent: 0,
           kerning: true,
           align: "left",
+          needspace: 10,
           headingNumberFormat: () => "",
         },
         li1: { firstIndent: em(-1), marker: () => "・" },
@@ -393,14 +402,16 @@ export const generatePdf = async (
           lineHeight: em(1.5),
           align: "left",
           font: monoFont,
-          firstIndent: 0,
         },
         caption: {
           align: "center",
-          firstIndent: 0,
         },
         box: {
           splitable: true,
+        },
+        footnote: {
+          size: Q(10),
+          lineHeight: em(1.4),
         },
       },
       command: {
@@ -408,15 +419,18 @@ export const generatePdf = async (
         c: { font: monoFont, padding: physical(0) },
       },
       gaps: [
-        ["image", "caption", 2],
+        // 見出し
         ["h1", "paragraph", 0],
         ["h2", "fallback", 4],
         ["h3", "fallback", 2],
         ["h4", "fallback", 0],
-        ["paragraph", "paragraph", 1.5],
-        ["code", "fallback", 3],
         ["fallback", "h2", 6],
         ["fallback", "h3", 4],
+
+        // 段落
+        ["paragraph", "paragraph", 1.5],
+
+        // リスト
         ["li1", "li1", 1],
         ["li1", "li2", 1],
         ["li2", "li1", 1],
@@ -424,9 +438,20 @@ export const generatePdf = async (
         ["li2", "li3", 1],
         ["li3", "li2", 1],
         ["li3", "li3", 1],
+
+        // 画像
         ["image", "caption", 4],
         ["fallback", "figure", 4],
         ["figure", "fallback", 4],
+
+        // コード
+        ["code", "fallback", 3],
+
+        // 脚注
+        ["footnote", "footnote", 2],
+        ["fallback", "footnote", 4],
+
+        // その他
         ["fallback", "fallback", 3],
       ],
     },

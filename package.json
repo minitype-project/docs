@@ -6,17 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "subset-fonts": "node scripts/subset-fonts.mjs",
-    "build": "node scripts/subset-fonts.mjs && astro build",
+    "build": "yarn import-zenn && node scripts/subset-fonts.mjs && astro build && yarn generate-pdf",
     "preview": "astro preview",
     "check": "biome check --write .",
-    "deploy": "astro build && wrangler pages deploy dist --project-name=minitype-docs",
-    "import-zenn": "node scripts/import-zenn.mjs",
-    "generate-pdf": "node --experimental-strip-types scripts/generate-pdf.ts"
+    "deploy": "yarn build && wrangler pages deploy dist --project-name=minitype-docs",
+    "import-zenn": "node scripts/import-zenn.mjs 62f1def4bad627 src/content/docs/explanatory.md",
+    "generate-pdf": "node --experimental-strip-types scripts/generate-pdf.ts explanatory"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
     "@astrojs/starlight": "^0.34.0",
-    "@minitype/minitype": "^0.1.1",
+    "@minitype/minitype": "^0.1.4",
     "astro": "^5.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

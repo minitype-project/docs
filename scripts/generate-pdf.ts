@@ -73,11 +73,11 @@ const main = async () => {
     },
   );
 
-  const outDir = resolve(publicDir, "pdf");
+  const outDir = resolve(publicDir, "docs");
   await mkdir(outDir, { recursive: true });
   const outPath = resolve(outDir, `${slug}.pdf`);
   await writeFile(outPath, pdfData);
-  console.log(`Saved: public/pdf/${slug}.pdf`);
+  console.log(`Saved: public/docs/${slug}.pdf`);
 };
 
 main().catch((err) => {
